@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/sign_in/sign_in_bloc.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
 import 'package:hackathon_lviv/widgets/pages/detailed_habit_page.dart';
@@ -28,7 +29,10 @@ class _HackathonAppState extends State<HackathonApp> {
       home: BlocBuilder<AuthorizationBloc, AccountState>(
         builder: (ctx, state) => state.map(
           initial: (_) => const SplashPage(),
-          unauthorized: (_) => const SignInPage(),
+          unauthorized: (_) => BlocProvider(
+            create: (ctx) => SignInBloc(),
+            child: const SignInPage(),
+          ),
           authorized: (_) => MaterialApp(
             initialRoute: ProgressPage.routeName,
             routes: {

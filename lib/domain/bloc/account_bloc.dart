@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'account_bloc.freezed.dart';
@@ -13,11 +14,18 @@ abstract class AccountState with _$AccountState {
 }
 
 class AuthorizationBloc extends Cubit<AccountState> {
-  AuthorizationBloc() : super(const AccountState.initial()) {
+  AuthorizationBloc({
+    required this.firebaseAuth,
+  }) : super(const AccountState.initial()) {
+    
     emit(const AccountState.unauthorized());
+    firebaseAuth.authStateChanges().listen((user) {
+      final state = user == null
+          ? const AccountState.unauthorized()
+          : const AccountState.authorized();
+      emit(state);
+    });
   }
 
-  void authorize() {
-    emit(const AccountState.authorized());
-  }
+  final FirebaseAuth firebaseAuth;
 }
