@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_lviv/domain/bloc/account_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/sign_in/sign_in_bloc.dart';
 import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
@@ -13,8 +14,8 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   void _onGoogleSignInPressed() {
-    final authBloc = context.read<AuthorizationBloc>();
-    authBloc.authorize();
+    final authBloc = context.read<SignInBloc>();
+    authBloc.add(const SignInEvent.googleAuth());
   }
 
   void _onSignInPressed() {
