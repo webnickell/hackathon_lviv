@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hackathon_lviv/data/models/habit.dart';
 import 'package:hackathon_lviv/domain/models/habit.dart';
+import 'package:hackathon_lviv/domain/models/monthly_track.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 import 'package:hackathon_lviv/util/paginated_list.dart';
 
@@ -19,6 +20,9 @@ class HabitFirestoreRepository implements HabitRepository {
     final res = await ref.get();
     return HabitResponse.fromJson(res.data() as Map<String, Object?>).toModel();
   }
+
+  // @override
+  // Future<MonthlyTrack>(String habitId) async => Object();
 
   @override
   Future<Habit> getHabit(String id) => habits

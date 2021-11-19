@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/account_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/add_habit_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/sign_in/sign_in_bloc.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
-import 'package:hackathon_lviv/widgets/pages/detailed_habit_page.dart';
+import 'package:hackathon_lviv/widgets/pages/habit_card_page' '.dart';
 import 'package:hackathon_lviv/widgets/pages/habits_page.dart';
 import 'package:hackathon_lviv/widgets/pages/progress_page.dart';
 import 'package:hackathon_lviv/widgets/pages/sign_in_page.dart';
@@ -34,16 +35,20 @@ class _HackathonAppState extends State<HackathonApp> {
             child: const SignInPage(),
           ),
           authorized: (_) => MaterialApp(
-            initialRoute: ProgressPage.routeName,
+            debugShowCheckedModeBanner: false,
+            initialRoute: AddHabitPage.routeName,
             routes: {
-              AddHabitPage.routeName: (ctx) => const AddHabitPage(),
+              AddHabitPage.routeName: (ctx) => BlocProvider<AddHabitBloc>(
+                    create: (context) => AddHabitBloc(),
+                    child: const AddHabitPage(),
+                  ),
               HabitsPage.routeName: (ctx) => const HabitsPage(),
               ProgressPage.routeName: (ctx) => BlocProvider(
                   create: (ctx) => ProgressBloc(
                         weekRepository: ctx.read<IWeekRepository>(),
                       ),
                   child: const ProgressPage()),
-              DetailedHabitPage.routeName: (ctx) => const DetailedHabitPage(),
+              HabitCardPage.routeName: (ctx) => const HabitCardPage(),
             },
           ),
         ),
