@@ -22,6 +22,7 @@ class Habit {
   final String description;
   final HabitType type;
   final DesignType designType;
+  final int? progress;
 
   const Habit({
     required this.name,
@@ -29,6 +30,7 @@ class Habit {
     this.id,
     required this.type,
     required this.designType,
+    this.progress,
   });
 }
 

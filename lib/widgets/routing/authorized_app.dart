@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hackathon_lviv/data/firestore_repository/checked_days_firestore_repository.dart';
 import 'package:hackathon_lviv/data/firestore_repository/habit_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/add_habit/add_habit_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
+import 'package:hackathon_lviv/domain/repository/checked_days_repository.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
@@ -24,6 +27,14 @@ class AuthorizedApp extends StatelessWidget {
         Provider<HabitRepository>(
           create: (ctx) {
             return HabitFirestoreRepository(
+              authId: state.account.uid,
+              firestore: FirebaseFirestore.instance,
+            );
+          },
+        ),
+        Provider<CheckedDaysRepository>(
+          create: (ctx) {
+            return CheckedDaysFirestoreRepository(
               authId: state.account.uid,
               firestore: FirebaseFirestore.instance,
             );
@@ -50,7 +61,13 @@ class AuthorizedApp extends StatelessWidget {
                 ),
                 child: const AddHabitPage(),
               ),
-          HabitCardPage.routeName: (ctx) => const HabitCardPage(),
+          HabitCardPage.routeName: (ctx) => BlocProvider<HabitCardBloc>(
+                create: (ctx) => HabitCardBloc(
+                  habitRepository: ctx.read<HabitRepository>(),
+                  checkedDaysRepository: ctx.read<CheckedDaysRepository>(),
+                ),
+                child: const HabitCardPage(),
+              ),
         },
       ),
     );

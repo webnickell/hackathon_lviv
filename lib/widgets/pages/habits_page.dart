@@ -8,6 +8,7 @@ import 'package:hackathon_lviv/widgets/components/bloc_paginated_list_view.dart'
 import 'package:hackathon_lviv/widgets/components/empty_placeholder.dart';
 import 'package:hackathon_lviv/widgets/components/habit_cell.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
+import 'package:hackathon_lviv/widgets/pages/habit_card_page.dart';
 
 class HabitsPage extends StatefulWidget {
   const HabitsPage({Key? key}) : super(key: key);
@@ -57,8 +58,6 @@ class HabitsContent extends StatelessWidget {
 
   final bool usefulHabits;
 
-  void _onHabitTap(ShortHabit habit) {}
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HabitsBloc>(
@@ -68,7 +67,12 @@ class HabitsContent extends StatelessWidget {
       )..add(const PaginationEvent.load()),
       child: BlocPaginatedListView<HabitsBloc, ShortHabit>.separated(
         itemBuilder: (ctx, item, i) => HabitCell(
-          onTap: () => _onHabitTap(item),
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              HabitCardPage.routeName,
+              arguments: item.id,
+            );
+          },
           index: i,
           habit: item,
         ),
