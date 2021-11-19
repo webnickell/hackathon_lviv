@@ -33,16 +33,23 @@ class BlocPaginatedListView<C extends PaginationBloc<T>, T>
         orElse: () => _defaulLoadingBuilder(context),
         data: (data) => data.data.isEmpty
             ? emptyItemsBuilder(context)
-            : separatorBuilder == null
-                ? ListView.builder(
-                    itemBuilder: (ctx, i) => itemBuilder(ctx, data.data[i], i),
-                    itemCount: data.data.length,
-                  )
-                : ListView.separated(
-                    itemBuilder: (ctx, i) => itemBuilder(ctx, data.data[i], i),
-                    separatorBuilder: separatorBuilder!,
-                    itemCount: data.data.length,
-                  ),
+            : RefreshIndicator(
+                onRefresh: () async {
+                  context.read<C>().add(PaginationEvent.load(true));
+                },
+                child: separatorBuilder == null
+                    ? ListView.builder(
+                        itemBuilder: (ctx, i) =>
+                            itemBuilder(ctx, data.data[i], i),
+                        itemCount: data.data.length,
+                      )
+                    : ListView.separated(
+                        itemBuilder: (ctx, i) =>
+                            itemBuilder(ctx, data.data[i], i),
+                        separatorBuilder: separatorBuilder!,
+                        itemCount: data.data.length,
+                      ),
+              ),
       ),
     );
   }
