@@ -13,6 +13,10 @@ class AccountFirestoreRepository implements AccountRepository {
       .collection('users')
       .doc(authId)
       .get()
-      .then((value) => const Account(email: '', password: ''));
+      .then((value) => const Account(
+            uid: '',
+            photoUrl: '',
+            displayName: '',
+          ));
   // TODO: Map from real data
 }

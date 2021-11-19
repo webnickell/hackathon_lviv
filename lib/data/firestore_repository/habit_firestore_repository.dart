@@ -4,6 +4,7 @@ import 'package:hackathon_lviv/domain/models/habit.dart';
 import 'package:hackathon_lviv/domain/models/monthly_track.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 import 'package:hackathon_lviv/util/paginated_list.dart';
+import 'package:hackathon_lviv/util/tuples.dart';
 
 class HabitFirestoreRepository implements HabitRepository {
   HabitFirestoreRepository({required this.firestore, required this.authId});
@@ -18,11 +19,9 @@ class HabitFirestoreRepository implements HabitRepository {
     final req = HabitResponse.fromModel(habit);
     final ref = await habits.add(req.toJson());
     final res = await ref.get();
-    return HabitResponse.fromJson(res.data() as Map<String, Object?>).toModel();
+    return HabitResponse.fromJson(res.data() as Map<String, Object?>)
+        .toModel(res.id);
   }
-
-  // @override
-  // Future<MonthlyTrack>(String habitId) async => Object();
 
   @override
   Future<Habit> getHabit(String id) => habits
@@ -37,8 +36,9 @@ class HabitFirestoreRepository implements HabitRepository {
     int limit = 10,
     required bool usefulHabits,
   }) async {
-    final query = habits
-        .startAfterDocument(cursor as DocumentSnapshot<Object?>)
+    final query = (cursor == null
+            ? habits
+            : habits.startAfterDocument(cursor as DocumentSnapshot<Object?>))
         .where(
           'type',
           isEqualTo:
@@ -48,9 +48,11 @@ class HabitFirestoreRepository implements HabitRepository {
     final snapshot = await query.get();
 
     final list = snapshot.docs
-        .map((e) => HabitResponse.fromJson(e.data()))
-        .map((e) => e.toShortModel())
+        .map((e) => Pair(HabitResponse.fromJson(e.data()), e.id))
+        .map((e) => e.first.toShortModel(e.second))
         .toList();
+
+    snapshot.size;
 
     return PaginatedList(
       data: list,

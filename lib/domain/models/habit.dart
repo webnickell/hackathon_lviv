@@ -17,7 +17,7 @@ enum DesignType {
 }
 
 class Habit {
-  final String id;
+  final String? id;
   final String name;
   final String description;
   final HabitType type;
@@ -26,7 +26,7 @@ class Habit {
   const Habit({
     required this.name,
     required this.description,
-    required this.id,
+    this.id,
     required this.type,
     required this.designType,
   });
