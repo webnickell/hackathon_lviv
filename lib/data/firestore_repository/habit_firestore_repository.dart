@@ -24,11 +24,19 @@ class HabitFirestoreRepository implements HabitRepository {
   }
 
   @override
+  Future<Habit> updateHabit(Habit habit) async {
+    final req = HabitResponse.fromModel(habit);
+    await habits.doc(habit.id).set(req.toJson());
+    return habit;
+  }
+
+  @override
   Future<Habit> getHabit(String id) => habits
       .doc(id)
       .get()
-      .then((res) => HabitResponse.fromJson(res.data() as Map<String, Object?>))
-      .then((value) => value.toModel());
+      .then((res) =>
+          Pair(HabitResponse.fromJson(res.data() as Map<String, Object?>), res))
+      .then((value) => value.first.toModel(value.second.id));
 
   @override
   Future<PaginatedList<ShortHabit>> getHabits({

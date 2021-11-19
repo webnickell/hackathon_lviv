@@ -17,19 +17,20 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$HabitCardEventTearOff {
   const _$HabitCardEventTearOff();
 
-  DaySubmitted submitDay({required bool isSuccess, required DateTime date}) {
-    return DaySubmitted(
-      isSuccess: isSuccess,
+  LoadHabitDataEvent load(String id) {
+    return LoadHabitDataEvent(
+      id,
+    );
+  }
+
+  SelectDate selectDate({required DateTime date}) {
+    return SelectDate(
       date: date,
     );
   }
 
-  LoadHabitDataEvent loadHabitData(
-      {required String habitId, required int month}) {
-    return LoadHabitDataEvent(
-      habitId: habitId,
-      month: month,
-    );
+  SubmitDates submitDates() {
+    return const SubmitDates();
   }
 }
 
@@ -40,39 +41,45 @@ const $HabitCardEvent = _$HabitCardEventTearOff();
 mixin _$HabitCardEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isSuccess, DateTime date) submitDay,
-    required TResult Function(String habitId, int month) loadHabitData,
+    required TResult Function(String id) load,
+    required TResult Function(DateTime date) selectDate,
+    required TResult Function() submitDates,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isSuccess, DateTime date)? submitDay,
-    TResult Function(String habitId, int month)? loadHabitData,
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isSuccess, DateTime date)? submitDay,
-    TResult Function(String habitId, int month)? loadHabitData,
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(DaySubmitted value) submitDay,
-    required TResult Function(LoadHabitDataEvent value) loadHabitData,
+    required TResult Function(LoadHabitDataEvent value) load,
+    required TResult Function(SelectDate value) selectDate,
+    required TResult Function(SubmitDates value) submitDates,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DaySubmitted value)? submitDay,
-    TResult Function(LoadHabitDataEvent value)? loadHabitData,
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(DaySubmitted value)? submitDay,
-    TResult Function(LoadHabitDataEvent value)? loadHabitData,
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -96,157 +103,11 @@ class _$HabitCardEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $DaySubmittedCopyWith<$Res> {
-  factory $DaySubmittedCopyWith(
-          DaySubmitted value, $Res Function(DaySubmitted) then) =
-      _$DaySubmittedCopyWithImpl<$Res>;
-  $Res call({bool isSuccess, DateTime date});
-}
-
-/// @nodoc
-class _$DaySubmittedCopyWithImpl<$Res>
-    extends _$HabitCardEventCopyWithImpl<$Res>
-    implements $DaySubmittedCopyWith<$Res> {
-  _$DaySubmittedCopyWithImpl(
-      DaySubmitted _value, $Res Function(DaySubmitted) _then)
-      : super(_value, (v) => _then(v as DaySubmitted));
-
-  @override
-  DaySubmitted get _value => super._value as DaySubmitted;
-
-  @override
-  $Res call({
-    Object? isSuccess = freezed,
-    Object? date = freezed,
-  }) {
-    return _then(DaySubmitted(
-      isSuccess: isSuccess == freezed
-          ? _value.isSuccess
-          : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      date: date == freezed
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$DaySubmitted extends DaySubmitted {
-  const _$DaySubmitted({required this.isSuccess, required this.date})
-      : super._();
-
-  @override
-  final bool isSuccess;
-  @override
-  final DateTime date;
-
-  @override
-  String toString() {
-    return 'HabitCardEvent.submitDay(isSuccess: $isSuccess, date: $date)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is DaySubmitted &&
-            (identical(other.isSuccess, isSuccess) ||
-                other.isSuccess == isSuccess) &&
-            (identical(other.date, date) || other.date == date));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, isSuccess, date);
-
-  @JsonKey(ignore: true)
-  @override
-  $DaySubmittedCopyWith<DaySubmitted> get copyWith =>
-      _$DaySubmittedCopyWithImpl<DaySubmitted>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(bool isSuccess, DateTime date) submitDay,
-    required TResult Function(String habitId, int month) loadHabitData,
-  }) {
-    return submitDay(isSuccess, date);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isSuccess, DateTime date)? submitDay,
-    TResult Function(String habitId, int month)? loadHabitData,
-  }) {
-    return submitDay?.call(isSuccess, date);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isSuccess, DateTime date)? submitDay,
-    TResult Function(String habitId, int month)? loadHabitData,
-    required TResult orElse(),
-  }) {
-    if (submitDay != null) {
-      return submitDay(isSuccess, date);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(DaySubmitted value) submitDay,
-    required TResult Function(LoadHabitDataEvent value) loadHabitData,
-  }) {
-    return submitDay(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DaySubmitted value)? submitDay,
-    TResult Function(LoadHabitDataEvent value)? loadHabitData,
-  }) {
-    return submitDay?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(DaySubmitted value)? submitDay,
-    TResult Function(LoadHabitDataEvent value)? loadHabitData,
-    required TResult orElse(),
-  }) {
-    if (submitDay != null) {
-      return submitDay(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class DaySubmitted extends HabitCardEvent {
-  const factory DaySubmitted(
-      {required bool isSuccess, required DateTime date}) = _$DaySubmitted;
-  const DaySubmitted._() : super._();
-
-  bool get isSuccess;
-  DateTime get date;
-  @JsonKey(ignore: true)
-  $DaySubmittedCopyWith<DaySubmitted> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 abstract class $LoadHabitDataEventCopyWith<$Res> {
   factory $LoadHabitDataEventCopyWith(
           LoadHabitDataEvent value, $Res Function(LoadHabitDataEvent) then) =
       _$LoadHabitDataEventCopyWithImpl<$Res>;
-  $Res call({String habitId, int month});
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -262,18 +123,13 @@ class _$LoadHabitDataEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? habitId = freezed,
-    Object? month = freezed,
+    Object? id = freezed,
   }) {
     return _then(LoadHabitDataEvent(
-      habitId: habitId == freezed
-          ? _value.habitId
-          : habitId // ignore: cast_nullable_to_non_nullable
+      id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      month: month == freezed
-          ? _value.month
-          : month // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -281,17 +137,14 @@ class _$LoadHabitDataEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadHabitDataEvent extends LoadHabitDataEvent {
-  const _$LoadHabitDataEvent({required this.habitId, required this.month})
-      : super._();
+  const _$LoadHabitDataEvent(this.id) : super._();
 
   @override
-  final String habitId;
-  @override
-  final int month;
+  final String id;
 
   @override
   String toString() {
-    return 'HabitCardEvent.loadHabitData(habitId: $habitId, month: $month)';
+    return 'HabitCardEvent.load(id: $id)';
   }
 
   @override
@@ -299,12 +152,11 @@ class _$LoadHabitDataEvent extends LoadHabitDataEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LoadHabitDataEvent &&
-            (identical(other.habitId, habitId) || other.habitId == habitId) &&
-            (identical(other.month, month) || other.month == month));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, habitId, month);
+  int get hashCode => Object.hash(runtimeType, id);
 
   @JsonKey(ignore: true)
   @override
@@ -314,30 +166,33 @@ class _$LoadHabitDataEvent extends LoadHabitDataEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isSuccess, DateTime date) submitDay,
-    required TResult Function(String habitId, int month) loadHabitData,
+    required TResult Function(String id) load,
+    required TResult Function(DateTime date) selectDate,
+    required TResult Function() submitDates,
   }) {
-    return loadHabitData(habitId, month);
+    return load(id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isSuccess, DateTime date)? submitDay,
-    TResult Function(String habitId, int month)? loadHabitData,
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
   }) {
-    return loadHabitData?.call(habitId, month);
+    return load?.call(id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isSuccess, DateTime date)? submitDay,
-    TResult Function(String habitId, int month)? loadHabitData,
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
     required TResult orElse(),
   }) {
-    if (loadHabitData != null) {
-      return loadHabitData(habitId, month);
+    if (load != null) {
+      return load(id);
     }
     return orElse();
   }
@@ -345,45 +200,295 @@ class _$LoadHabitDataEvent extends LoadHabitDataEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(DaySubmitted value) submitDay,
-    required TResult Function(LoadHabitDataEvent value) loadHabitData,
+    required TResult Function(LoadHabitDataEvent value) load,
+    required TResult Function(SelectDate value) selectDate,
+    required TResult Function(SubmitDates value) submitDates,
   }) {
-    return loadHabitData(this);
+    return load(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(DaySubmitted value)? submitDay,
-    TResult Function(LoadHabitDataEvent value)? loadHabitData,
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
   }) {
-    return loadHabitData?.call(this);
+    return load?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(DaySubmitted value)? submitDay,
-    TResult Function(LoadHabitDataEvent value)? loadHabitData,
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
     required TResult orElse(),
   }) {
-    if (loadHabitData != null) {
-      return loadHabitData(this);
+    if (load != null) {
+      return load(this);
     }
     return orElse();
   }
 }
 
 abstract class LoadHabitDataEvent extends HabitCardEvent {
-  const factory LoadHabitDataEvent(
-      {required String habitId, required int month}) = _$LoadHabitDataEvent;
+  const factory LoadHabitDataEvent(String id) = _$LoadHabitDataEvent;
   const LoadHabitDataEvent._() : super._();
 
-  String get habitId;
-  int get month;
+  String get id;
   @JsonKey(ignore: true)
   $LoadHabitDataEventCopyWith<LoadHabitDataEvent> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SelectDateCopyWith<$Res> {
+  factory $SelectDateCopyWith(
+          SelectDate value, $Res Function(SelectDate) then) =
+      _$SelectDateCopyWithImpl<$Res>;
+  $Res call({DateTime date});
+}
+
+/// @nodoc
+class _$SelectDateCopyWithImpl<$Res> extends _$HabitCardEventCopyWithImpl<$Res>
+    implements $SelectDateCopyWith<$Res> {
+  _$SelectDateCopyWithImpl(SelectDate _value, $Res Function(SelectDate) _then)
+      : super(_value, (v) => _then(v as SelectDate));
+
+  @override
+  SelectDate get _value => super._value as SelectDate;
+
+  @override
+  $Res call({
+    Object? date = freezed,
+  }) {
+    return _then(SelectDate(
+      date: date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SelectDate extends SelectDate {
+  const _$SelectDate({required this.date}) : super._();
+
+  @override
+  final DateTime date;
+
+  @override
+  String toString() {
+    return 'HabitCardEvent.selectDate(date: $date)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SelectDate &&
+            (identical(other.date, date) || other.date == date));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, date);
+
+  @JsonKey(ignore: true)
+  @override
+  $SelectDateCopyWith<SelectDate> get copyWith =>
+      _$SelectDateCopyWithImpl<SelectDate>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) load,
+    required TResult Function(DateTime date) selectDate,
+    required TResult Function() submitDates,
+  }) {
+    return selectDate(date);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
+  }) {
+    return selectDate?.call(date);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
+    required TResult orElse(),
+  }) {
+    if (selectDate != null) {
+      return selectDate(date);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadHabitDataEvent value) load,
+    required TResult Function(SelectDate value) selectDate,
+    required TResult Function(SubmitDates value) submitDates,
+  }) {
+    return selectDate(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
+  }) {
+    return selectDate?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
+    required TResult orElse(),
+  }) {
+    if (selectDate != null) {
+      return selectDate(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SelectDate extends HabitCardEvent {
+  const factory SelectDate({required DateTime date}) = _$SelectDate;
+  const SelectDate._() : super._();
+
+  DateTime get date;
+  @JsonKey(ignore: true)
+  $SelectDateCopyWith<SelectDate> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SubmitDatesCopyWith<$Res> {
+  factory $SubmitDatesCopyWith(
+          SubmitDates value, $Res Function(SubmitDates) then) =
+      _$SubmitDatesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$SubmitDatesCopyWithImpl<$Res> extends _$HabitCardEventCopyWithImpl<$Res>
+    implements $SubmitDatesCopyWith<$Res> {
+  _$SubmitDatesCopyWithImpl(
+      SubmitDates _value, $Res Function(SubmitDates) _then)
+      : super(_value, (v) => _then(v as SubmitDates));
+
+  @override
+  SubmitDates get _value => super._value as SubmitDates;
+}
+
+/// @nodoc
+
+class _$SubmitDates extends SubmitDates {
+  const _$SubmitDates() : super._();
+
+  @override
+  String toString() {
+    return 'HabitCardEvent.submitDates()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is SubmitDates);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) load,
+    required TResult Function(DateTime date) selectDate,
+    required TResult Function() submitDates,
+  }) {
+    return submitDates();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
+  }) {
+    return submitDates?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? load,
+    TResult Function(DateTime date)? selectDate,
+    TResult Function()? submitDates,
+    required TResult orElse(),
+  }) {
+    if (submitDates != null) {
+      return submitDates();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadHabitDataEvent value) load,
+    required TResult Function(SelectDate value) selectDate,
+    required TResult Function(SubmitDates value) submitDates,
+  }) {
+    return submitDates(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
+  }) {
+    return submitDates?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadHabitDataEvent value)? load,
+    TResult Function(SelectDate value)? selectDate,
+    TResult Function(SubmitDates value)? submitDates,
+    required TResult orElse(),
+  }) {
+    if (submitDates != null) {
+      return submitDates(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SubmitDates extends HabitCardEvent {
+  const factory SubmitDates() = _$SubmitDates;
+  const SubmitDates._() : super._();
 }
 
 /// @nodoc
@@ -394,23 +499,22 @@ class _$HabitCardStateTearOff {
     return const HabitDataLoadInitial();
   }
 
-  SubmitLoadInProgress submitLoading() {
-    return const SubmitLoadInProgress();
-  }
-
-  SubmitLoadSuccess submitSuccess() {
-    return const SubmitLoadSuccess();
-  }
-
   HabitDataLoadInProgress loading() {
     return const HabitDataLoadInProgress();
   }
 
-  HabitDataLoadSuccess loaded(
-      {required Habit habit, required MonthlyTrack track}) {
-    return HabitDataLoadSuccess(
+  HabitDataLoadData data(
+      {required Habit habit,
+      required Set<DateTime> markedDates,
+      required Set<DateTime> selectedDates,
+      bool loading = false,
+      NetworkError? error}) {
+    return HabitDataLoadData(
       habit: habit,
-      track: track,
+      markedDates: markedDates,
+      selectedDates: selectedDates,
+      loading: loading,
+      error: error,
     );
   }
 
@@ -427,30 +531,30 @@ mixin _$HabitCardState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
     required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
+    required TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)
+        data,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -458,30 +562,24 @@ mixin _$HabitCardState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
     required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
+    required TResult Function(HabitDataLoadData value) data,
     required TResult Function(HabitDataLoadError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
     required TResult orElse(),
   }) =>
@@ -547,10 +645,10 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
     required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
+    required TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)
+        data,
     required TResult Function() error,
   }) {
     return initial();
@@ -560,10 +658,10 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
   }) {
     return initial?.call();
@@ -573,10 +671,10 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -590,10 +688,8 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
     required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
+    required TResult Function(HabitDataLoadData value) data,
     required TResult Function(HabitDataLoadError value) error,
   }) {
     return initial(this);
@@ -603,10 +699,8 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
   }) {
     return initial?.call(this);
@@ -616,10 +710,8 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
     required TResult orElse(),
   }) {
@@ -633,266 +725,6 @@ class _$HabitDataLoadInitial extends HabitDataLoadInitial {
 abstract class HabitDataLoadInitial extends HabitCardState {
   const factory HabitDataLoadInitial() = _$HabitDataLoadInitial;
   const HabitDataLoadInitial._() : super._();
-}
-
-/// @nodoc
-abstract class $SubmitLoadInProgressCopyWith<$Res> {
-  factory $SubmitLoadInProgressCopyWith(SubmitLoadInProgress value,
-          $Res Function(SubmitLoadInProgress) then) =
-      _$SubmitLoadInProgressCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$SubmitLoadInProgressCopyWithImpl<$Res>
-    extends _$HabitCardStateCopyWithImpl<$Res>
-    implements $SubmitLoadInProgressCopyWith<$Res> {
-  _$SubmitLoadInProgressCopyWithImpl(
-      SubmitLoadInProgress _value, $Res Function(SubmitLoadInProgress) _then)
-      : super(_value, (v) => _then(v as SubmitLoadInProgress));
-
-  @override
-  SubmitLoadInProgress get _value => super._value as SubmitLoadInProgress;
-}
-
-/// @nodoc
-
-class _$SubmitLoadInProgress extends SubmitLoadInProgress {
-  const _$SubmitLoadInProgress() : super._();
-
-  @override
-  String toString() {
-    return 'HabitCardState.submitLoading()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SubmitLoadInProgress);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
-    required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
-    required TResult Function() error,
-  }) {
-    return submitLoading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
-    TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
-    TResult Function()? error,
-  }) {
-    return submitLoading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
-    TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
-    TResult Function()? error,
-    required TResult orElse(),
-  }) {
-    if (submitLoading != null) {
-      return submitLoading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
-    required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
-    required TResult Function(HabitDataLoadError value) error,
-  }) {
-    return submitLoading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
-    TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
-    TResult Function(HabitDataLoadError value)? error,
-  }) {
-    return submitLoading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
-    TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
-    TResult Function(HabitDataLoadError value)? error,
-    required TResult orElse(),
-  }) {
-    if (submitLoading != null) {
-      return submitLoading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class SubmitLoadInProgress extends HabitCardState {
-  const factory SubmitLoadInProgress() = _$SubmitLoadInProgress;
-  const SubmitLoadInProgress._() : super._();
-}
-
-/// @nodoc
-abstract class $SubmitLoadSuccessCopyWith<$Res> {
-  factory $SubmitLoadSuccessCopyWith(
-          SubmitLoadSuccess value, $Res Function(SubmitLoadSuccess) then) =
-      _$SubmitLoadSuccessCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$SubmitLoadSuccessCopyWithImpl<$Res>
-    extends _$HabitCardStateCopyWithImpl<$Res>
-    implements $SubmitLoadSuccessCopyWith<$Res> {
-  _$SubmitLoadSuccessCopyWithImpl(
-      SubmitLoadSuccess _value, $Res Function(SubmitLoadSuccess) _then)
-      : super(_value, (v) => _then(v as SubmitLoadSuccess));
-
-  @override
-  SubmitLoadSuccess get _value => super._value as SubmitLoadSuccess;
-}
-
-/// @nodoc
-
-class _$SubmitLoadSuccess extends SubmitLoadSuccess {
-  const _$SubmitLoadSuccess() : super._();
-
-  @override
-  String toString() {
-    return 'HabitCardState.submitSuccess()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SubmitLoadSuccess);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
-    required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
-    required TResult Function() error,
-  }) {
-    return submitSuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
-    TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
-    TResult Function()? error,
-  }) {
-    return submitSuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
-    TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
-    TResult Function()? error,
-    required TResult orElse(),
-  }) {
-    if (submitSuccess != null) {
-      return submitSuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
-    required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
-    required TResult Function(HabitDataLoadError value) error,
-  }) {
-    return submitSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
-    TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
-    TResult Function(HabitDataLoadError value)? error,
-  }) {
-    return submitSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
-    TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
-    TResult Function(HabitDataLoadError value)? error,
-    required TResult orElse(),
-  }) {
-    if (submitSuccess != null) {
-      return submitSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class SubmitLoadSuccess extends HabitCardState {
-  const factory SubmitLoadSuccess() = _$SubmitLoadSuccess;
-  const SubmitLoadSuccess._() : super._();
 }
 
 /// @nodoc
@@ -937,10 +769,10 @@ class _$HabitDataLoadInProgress extends HabitDataLoadInProgress {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
     required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
+    required TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)
+        data,
     required TResult Function() error,
   }) {
     return loading();
@@ -950,10 +782,10 @@ class _$HabitDataLoadInProgress extends HabitDataLoadInProgress {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
   }) {
     return loading?.call();
@@ -963,10 +795,10 @@ class _$HabitDataLoadInProgress extends HabitDataLoadInProgress {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -980,10 +812,8 @@ class _$HabitDataLoadInProgress extends HabitDataLoadInProgress {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
     required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
+    required TResult Function(HabitDataLoadData value) data,
     required TResult Function(HabitDataLoadError value) error,
   }) {
     return loading(this);
@@ -993,10 +823,8 @@ class _$HabitDataLoadInProgress extends HabitDataLoadInProgress {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
   }) {
     return loading?.call(this);
@@ -1006,10 +834,8 @@ class _$HabitDataLoadInProgress extends HabitDataLoadInProgress {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
     required TResult orElse(),
   }) {
@@ -1026,115 +852,158 @@ abstract class HabitDataLoadInProgress extends HabitCardState {
 }
 
 /// @nodoc
-abstract class $HabitDataLoadSuccessCopyWith<$Res> {
-  factory $HabitDataLoadSuccessCopyWith(HabitDataLoadSuccess value,
-          $Res Function(HabitDataLoadSuccess) then) =
-      _$HabitDataLoadSuccessCopyWithImpl<$Res>;
-  $Res call({Habit habit, MonthlyTrack track});
+abstract class $HabitDataLoadDataCopyWith<$Res> {
+  factory $HabitDataLoadDataCopyWith(
+          HabitDataLoadData value, $Res Function(HabitDataLoadData) then) =
+      _$HabitDataLoadDataCopyWithImpl<$Res>;
+  $Res call(
+      {Habit habit,
+      Set<DateTime> markedDates,
+      Set<DateTime> selectedDates,
+      bool loading,
+      NetworkError? error});
 }
 
 /// @nodoc
-class _$HabitDataLoadSuccessCopyWithImpl<$Res>
+class _$HabitDataLoadDataCopyWithImpl<$Res>
     extends _$HabitCardStateCopyWithImpl<$Res>
-    implements $HabitDataLoadSuccessCopyWith<$Res> {
-  _$HabitDataLoadSuccessCopyWithImpl(
-      HabitDataLoadSuccess _value, $Res Function(HabitDataLoadSuccess) _then)
-      : super(_value, (v) => _then(v as HabitDataLoadSuccess));
+    implements $HabitDataLoadDataCopyWith<$Res> {
+  _$HabitDataLoadDataCopyWithImpl(
+      HabitDataLoadData _value, $Res Function(HabitDataLoadData) _then)
+      : super(_value, (v) => _then(v as HabitDataLoadData));
 
   @override
-  HabitDataLoadSuccess get _value => super._value as HabitDataLoadSuccess;
+  HabitDataLoadData get _value => super._value as HabitDataLoadData;
 
   @override
   $Res call({
     Object? habit = freezed,
-    Object? track = freezed,
+    Object? markedDates = freezed,
+    Object? selectedDates = freezed,
+    Object? loading = freezed,
+    Object? error = freezed,
   }) {
-    return _then(HabitDataLoadSuccess(
+    return _then(HabitDataLoadData(
       habit: habit == freezed
           ? _value.habit
           : habit // ignore: cast_nullable_to_non_nullable
               as Habit,
-      track: track == freezed
-          ? _value.track
-          : track // ignore: cast_nullable_to_non_nullable
-              as MonthlyTrack,
+      markedDates: markedDates == freezed
+          ? _value.markedDates
+          : markedDates // ignore: cast_nullable_to_non_nullable
+              as Set<DateTime>,
+      selectedDates: selectedDates == freezed
+          ? _value.selectedDates
+          : selectedDates // ignore: cast_nullable_to_non_nullable
+              as Set<DateTime>,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as NetworkError?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$HabitDataLoadSuccess extends HabitDataLoadSuccess {
-  const _$HabitDataLoadSuccess({required this.habit, required this.track})
+class _$HabitDataLoadData extends HabitDataLoadData {
+  const _$HabitDataLoadData(
+      {required this.habit,
+      required this.markedDates,
+      required this.selectedDates,
+      this.loading = false,
+      this.error})
       : super._();
 
   @override
   final Habit habit;
   @override
-  final MonthlyTrack track;
+  final Set<DateTime> markedDates;
+  @override
+  final Set<DateTime> selectedDates;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool loading;
+  @override
+  final NetworkError? error;
 
   @override
   String toString() {
-    return 'HabitCardState.loaded(habit: $habit, track: $track)';
+    return 'HabitCardState.data(habit: $habit, markedDates: $markedDates, selectedDates: $selectedDates, loading: $loading, error: $error)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is HabitDataLoadSuccess &&
+            other is HabitDataLoadData &&
             (identical(other.habit, habit) || other.habit == habit) &&
-            (identical(other.track, track) || other.track == track));
+            const DeepCollectionEquality()
+                .equals(other.markedDates, markedDates) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedDates, selectedDates) &&
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, habit, track);
+  int get hashCode => Object.hash(
+      runtimeType,
+      habit,
+      const DeepCollectionEquality().hash(markedDates),
+      const DeepCollectionEquality().hash(selectedDates),
+      loading,
+      error);
 
   @JsonKey(ignore: true)
   @override
-  $HabitDataLoadSuccessCopyWith<HabitDataLoadSuccess> get copyWith =>
-      _$HabitDataLoadSuccessCopyWithImpl<HabitDataLoadSuccess>(
-          this, _$identity);
+  $HabitDataLoadDataCopyWith<HabitDataLoadData> get copyWith =>
+      _$HabitDataLoadDataCopyWithImpl<HabitDataLoadData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
     required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
+    required TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)
+        data,
     required TResult Function() error,
   }) {
-    return loaded(habit, track);
+    return data(habit, markedDates, selectedDates, this.loading, this.error);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
   }) {
-    return loaded?.call(habit, track);
+    return data?.call(
+        habit, markedDates, selectedDates, this.loading, this.error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(habit, track);
+    if (data != null) {
+      return data(habit, markedDates, selectedDates, this.loading, this.error);
     }
     return orElse();
   }
@@ -1143,56 +1012,56 @@ class _$HabitDataLoadSuccess extends HabitDataLoadSuccess {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
     required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
+    required TResult Function(HabitDataLoadData value) data,
     required TResult Function(HabitDataLoadError value) error,
   }) {
-    return loaded(this);
+    return data(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
   }) {
-    return loaded?.call(this);
+    return data?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(this);
+    if (data != null) {
+      return data(this);
     }
     return orElse();
   }
 }
 
-abstract class HabitDataLoadSuccess extends HabitCardState {
-  const factory HabitDataLoadSuccess(
+abstract class HabitDataLoadData extends HabitCardState {
+  const factory HabitDataLoadData(
       {required Habit habit,
-      required MonthlyTrack track}) = _$HabitDataLoadSuccess;
-  const HabitDataLoadSuccess._() : super._();
+      required Set<DateTime> markedDates,
+      required Set<DateTime> selectedDates,
+      bool loading,
+      NetworkError? error}) = _$HabitDataLoadData;
+  const HabitDataLoadData._() : super._();
 
   Habit get habit;
-  MonthlyTrack get track;
+  Set<DateTime> get markedDates;
+  Set<DateTime> get selectedDates;
+  bool get loading;
+  NetworkError? get error;
   @JsonKey(ignore: true)
-  $HabitDataLoadSuccessCopyWith<HabitDataLoadSuccess> get copyWith =>
+  $HabitDataLoadDataCopyWith<HabitDataLoadData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1238,10 +1107,10 @@ class _$HabitDataLoadError extends HabitDataLoadError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() submitLoading,
-    required TResult Function() submitSuccess,
     required TResult Function() loading,
-    required TResult Function(Habit habit, MonthlyTrack track) loaded,
+    required TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)
+        data,
     required TResult Function() error,
   }) {
     return error();
@@ -1251,10 +1120,10 @@ class _$HabitDataLoadError extends HabitDataLoadError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
   }) {
     return error?.call();
@@ -1264,10 +1133,10 @@ class _$HabitDataLoadError extends HabitDataLoadError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? submitLoading,
-    TResult Function()? submitSuccess,
     TResult Function()? loading,
-    TResult Function(Habit habit, MonthlyTrack track)? loaded,
+    TResult Function(Habit habit, Set<DateTime> markedDates,
+            Set<DateTime> selectedDates, bool loading, NetworkError? error)?
+        data,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -1281,10 +1150,8 @@ class _$HabitDataLoadError extends HabitDataLoadError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(HabitDataLoadInitial value) initial,
-    required TResult Function(SubmitLoadInProgress value) submitLoading,
-    required TResult Function(SubmitLoadSuccess value) submitSuccess,
     required TResult Function(HabitDataLoadInProgress value) loading,
-    required TResult Function(HabitDataLoadSuccess value) loaded,
+    required TResult Function(HabitDataLoadData value) data,
     required TResult Function(HabitDataLoadError value) error,
   }) {
     return error(this);
@@ -1294,10 +1161,8 @@ class _$HabitDataLoadError extends HabitDataLoadError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
   }) {
     return error?.call(this);
@@ -1307,10 +1172,8 @@ class _$HabitDataLoadError extends HabitDataLoadError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HabitDataLoadInitial value)? initial,
-    TResult Function(SubmitLoadInProgress value)? submitLoading,
-    TResult Function(SubmitLoadSuccess value)? submitSuccess,
     TResult Function(HabitDataLoadInProgress value)? loading,
-    TResult Function(HabitDataLoadSuccess value)? loaded,
+    TResult Function(HabitDataLoadData value)? data,
     TResult Function(HabitDataLoadError value)? error,
     required TResult orElse(),
   }) {

@@ -13,6 +13,7 @@ HabitResponse _$HabitResponseFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       type: $enumDecode(_$HabitTypeEnumMap, json['type']),
       designType: $enumDecode(_$DesignTypeEnumMap, json['designType']),
+      progress: json['progress'] as int,
     );
 
 Map<String, dynamic> _$HabitResponseToJson(HabitResponse instance) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$HabitResponseToJson(HabitResponse instance) =>
       'description': instance.description,
       'type': _$HabitTypeEnumMap[instance.type],
       'designType': _$DesignTypeEnumMap[instance.designType],
+      'progress': instance.progress,
     };
 
 const _$HabitTypeEnumMap = {

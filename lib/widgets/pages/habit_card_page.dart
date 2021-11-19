@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
+import 'package:hackathon_lviv/widgets/components/calendar.dart';
 
 Map<int, bool> _dayStatus = {
   for (var date = 1; date < 31; date++)
@@ -16,88 +20,60 @@ class HabitCardPage extends StatefulWidget {
 
 class _HabitCardPageState extends State<HabitCardPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    context.read<HabitCardBloc>().add(HabitCardEvent.load(args as String));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Habit 1'),
+        title: BlocBuilder<HabitCardBloc, HabitCardState>(
+          builder: (context, state) => state.maybeMap(
+            orElse: () => const CircularProgressIndicator(),
+            data: (data) => Text(data.habit.name),
+          ),
+        ),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 20.0),
-            const Text('November'),
-            const SizedBox(height: 12.0),
-            Wrap(
-              runSpacing: 8.0,
-              spacing: 12.0,
-              direction: Axis.horizontal,
-              children: <Widget>[
-                ..._dayStatus.entries
-                    .map(
-                      (entry) => Container(
-                        height: 36.0,
-                        width: 36.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: entry.value ? Colors.green : Colors.black12,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${entry.key}',
-                            style: TextStyle(
-                              color:
-                                  entry.value ? Colors.white : Colors.red[400],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            const Text('Please, submit current day result'),
-            const SizedBox(height: 12.0),
-            SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: 44.0,
-                      minWidth: 120.0,
-                    ),
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                          color: Colors.red[400]!,
-                        ),
-                        primary: Colors.red[400],
-                      ),
-                      child: const Text(
-                        'Failed',
-                      ),
-                    ),
+            Expanded(
+              child: BlocBuilder<HabitCardBloc, HabitCardState>(
+                builder: (context, state) => state.maybeMap(
+                  orElse: () => const Center(
+                    child: CircularProgressIndicator(),
                   ),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: 44.0,
-                      minWidth: 120.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                      ),
-                      child: const Text('Success'),
-                    ),
+                  data: (data) => Calendar(
+                    onTap: (date) {
+                      context
+                          .read<HabitCardBloc>()
+                          .add(HabitCardEvent.selectDate(date: date));
+                    },
+                    selectedDates: data.selectedDates,
+                    markedDates: data.markedDates,
                   ),
-                ],
+                ),
               ),
             ),
+            CupertinoButton.filled(
+              child: const Text('Submit'),
+              onPressed: () {
+                context
+                    .read<HabitCardBloc>()
+                    .add(const HabitCardEvent.submitDates());
+              },
+            )
           ],
         ),
       ),

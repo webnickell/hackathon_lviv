@@ -11,6 +11,7 @@ class HabitResponse {
   final String description;
   final HabitType type;
   final DesignType designType;
+  final int progress;
 
   const HabitResponse({
     required this.name,
@@ -18,6 +19,7 @@ class HabitResponse {
     this.id,
     required this.type,
     required this.designType,
+    required this.progress,
   });
 
   factory HabitResponse.fromJson(Map<String, Object?> json) =>
@@ -29,6 +31,7 @@ class HabitResponse {
         id: habit.id,
         type: habit.type,
         designType: habit.designType,
+        progress: habit.progress ?? 0,
       );
 
   Map<String, Object?> toJson() => _$HabitResponseToJson(this);
@@ -39,12 +42,13 @@ class HabitResponse {
         id: id ?? this.id,
         type: type,
         designType: designType,
+        progress: progress,
       );
 
   ShortHabit toShortModel([String? id]) => ShortHabit(
         id: id ?? this.id!,
         name: name,
         type: type,
-        progress: 0,
+        progress: progress,
       );
 }
