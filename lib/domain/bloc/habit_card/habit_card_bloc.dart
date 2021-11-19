@@ -103,14 +103,14 @@ class HabitCardBloc extends Bloc<HabitCardEvent, HabitCardState> {
           return checkedDaysRepository.writeDateInHabit(s.habit.id!, date);
         });
 
-        // await habitRepository.updateHabit(Habit(
-        //   id: s.habit.id,
-        //   designType: s.habit.designType,
-        //   description: s.habit.description,
-        //   name: s.habit.name,
-        //   type: s.habit.type,
-        //   progress: selectedDates.length + (s.habit.progress ?? 0),
-        // ));
+        await habitRepository.updateHabit(Habit(
+          id: s.habit.id,
+          designType: s.habit.designType,
+          description: s.habit.description,
+          name: s.habit.name,
+          type: s.habit.type,
+          progress: selectedDates.length + (s.habit.progress ?? 0),
+        ));
 
         await Future.wait(futures);
 
