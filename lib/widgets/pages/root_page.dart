@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon_lviv/widgets/pages/account_page.dart';
 import 'package:hackathon_lviv/widgets/pages/habits_page.dart';
 import 'package:hackathon_lviv/widgets/pages/progress_page.dart';
 
@@ -41,7 +42,7 @@ class _RootPageState extends State<RootPage> {
         index: _section,
         children: const [
           HabitsPage(),
-          ProgressPage(),
+          AccountPage(),
         ],
       ),
     );
