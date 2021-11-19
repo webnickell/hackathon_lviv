@@ -32,7 +32,7 @@ class HabitCell extends StatelessWidget {
             const Spacer(),
             Text('${habit.progress}/21'),
             gap4,
-            if (habit.progress == 21)
+            if (habit.progress >= 21)
               const Icon(Icons.done, size: iconSize)
             else
               const SizedBox(width: iconSize, height: iconSize),
