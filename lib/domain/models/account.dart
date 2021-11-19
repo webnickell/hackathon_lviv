@@ -1,9 +1,15 @@
 class Account {
-  final String email;
-  final String password;
+  final String uid;
+  final String? displayName;
+  final String? photoUrl;
+  final int usefulHabits;
+  final int uselessHabits;
 
   const Account({
-    required this.email,
-    required this.password,
+    required this.uid,
+    required this.displayName,
+    required this.photoUrl,
+    this.usefulHabits = 0,
+    this.uselessHabits = 0,
   });
 }

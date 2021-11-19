@@ -244,8 +244,10 @@ class _$AddHabitStateTearOff {
     return const HabitLoadInProgress();
   }
 
-  HabitCreationSuccess created() {
-    return const HabitCreationSuccess();
+  HabitCreationSuccess created({required Habit habit}) {
+    return HabitCreationSuccess(
+      habit: habit,
+    );
   }
 
   HabitCreationError error() {
@@ -262,7 +264,7 @@ mixin _$AddHabitState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() created,
+    required TResult Function(Habit habit) created,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
@@ -270,7 +272,7 @@ mixin _$AddHabitState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -278,7 +280,7 @@ mixin _$AddHabitState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -370,7 +372,7 @@ class _$AddHabitInitial extends AddHabitInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() created,
+    required TResult Function(Habit habit) created,
     required TResult Function() error,
   }) {
     return initial();
@@ -381,7 +383,7 @@ class _$AddHabitInitial extends AddHabitInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
   }) {
     return initial?.call();
@@ -392,7 +394,7 @@ class _$AddHabitInitial extends AddHabitInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -488,7 +490,7 @@ class _$HabitLoadInProgress extends HabitLoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() created,
+    required TResult Function(Habit habit) created,
     required TResult Function() error,
   }) {
     return loading();
@@ -499,7 +501,7 @@ class _$HabitLoadInProgress extends HabitLoadInProgress {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
   }) {
     return loading?.call();
@@ -510,7 +512,7 @@ class _$HabitLoadInProgress extends HabitLoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -568,6 +570,7 @@ abstract class $HabitCreationSuccessCopyWith<$Res> {
   factory $HabitCreationSuccessCopyWith(HabitCreationSuccess value,
           $Res Function(HabitCreationSuccess) then) =
       _$HabitCreationSuccessCopyWithImpl<$Res>;
+  $Res call({Habit habit});
 }
 
 /// @nodoc
@@ -580,36 +583,59 @@ class _$HabitCreationSuccessCopyWithImpl<$Res>
 
   @override
   HabitCreationSuccess get _value => super._value as HabitCreationSuccess;
+
+  @override
+  $Res call({
+    Object? habit = freezed,
+  }) {
+    return _then(HabitCreationSuccess(
+      habit: habit == freezed
+          ? _value.habit
+          : habit // ignore: cast_nullable_to_non_nullable
+              as Habit,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$HabitCreationSuccess extends HabitCreationSuccess {
-  const _$HabitCreationSuccess() : super._();
+  const _$HabitCreationSuccess({required this.habit}) : super._();
+
+  @override
+  final Habit habit;
 
   @override
   String toString() {
-    return 'AddHabitState.created()';
+    return 'AddHabitState.created(habit: $habit)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is HabitCreationSuccess);
+        (other.runtimeType == runtimeType &&
+            other is HabitCreationSuccess &&
+            (identical(other.habit, habit) || other.habit == habit));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, habit);
+
+  @JsonKey(ignore: true)
+  @override
+  $HabitCreationSuccessCopyWith<HabitCreationSuccess> get copyWith =>
+      _$HabitCreationSuccessCopyWithImpl<HabitCreationSuccess>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() created,
+    required TResult Function(Habit habit) created,
     required TResult Function() error,
   }) {
-    return created();
+    return created(habit);
   }
 
   @override
@@ -617,10 +643,10 @@ class _$HabitCreationSuccess extends HabitCreationSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
   }) {
-    return created?.call();
+    return created?.call(habit);
   }
 
   @override
@@ -628,12 +654,12 @@ class _$HabitCreationSuccess extends HabitCreationSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (created != null) {
-      return created();
+      return created(habit);
     }
     return orElse();
   }
@@ -677,8 +703,14 @@ class _$HabitCreationSuccess extends HabitCreationSuccess {
 }
 
 abstract class HabitCreationSuccess extends AddHabitState {
-  const factory HabitCreationSuccess() = _$HabitCreationSuccess;
+  const factory HabitCreationSuccess({required Habit habit}) =
+      _$HabitCreationSuccess;
   const HabitCreationSuccess._() : super._();
+
+  Habit get habit;
+  @JsonKey(ignore: true)
+  $HabitCreationSuccessCopyWith<HabitCreationSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -724,7 +756,7 @@ class _$HabitCreationError extends HabitCreationError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() created,
+    required TResult Function(Habit habit) created,
     required TResult Function() error,
   }) {
     return error();
@@ -735,7 +767,7 @@ class _$HabitCreationError extends HabitCreationError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
   }) {
     return error?.call();
@@ -746,7 +778,7 @@ class _$HabitCreationError extends HabitCreationError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? created,
+    TResult Function(Habit habit)? created,
     TResult Function()? error,
     required TResult orElse(),
   }) {

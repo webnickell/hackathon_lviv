@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hackathon_lviv/domain/bloc/account_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/sign_in/sign_in_bloc.dart';
 import 'package:provider/provider.dart';
 

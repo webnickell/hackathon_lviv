@@ -21,8 +21,10 @@ class _$AccountStateTearOff {
     return const InitialAccountState();
   }
 
-  AuthorizedAccountState authorized() {
-    return const AuthorizedAccountState();
+  AuthorizedAccountState authorized({required Account account}) {
+    return AuthorizedAccountState(
+      account: account,
+    );
   }
 
   UnauthorizedAccountState unauthorized() {
@@ -38,21 +40,21 @@ mixin _$AccountState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authorized,
+    required TResult Function(Account account) authorized,
     required TResult Function() unauthorized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
     required TResult orElse(),
   }) =>
@@ -139,7 +141,7 @@ class _$InitialAccountState extends InitialAccountState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authorized,
+    required TResult Function(Account account) authorized,
     required TResult Function() unauthorized,
   }) {
     return initial();
@@ -149,7 +151,7 @@ class _$InitialAccountState extends InitialAccountState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
   }) {
     return initial?.call();
@@ -159,7 +161,7 @@ class _$InitialAccountState extends InitialAccountState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
     required TResult orElse(),
   }) {
@@ -214,6 +216,7 @@ abstract class $AuthorizedAccountStateCopyWith<$Res> {
   factory $AuthorizedAccountStateCopyWith(AuthorizedAccountState value,
           $Res Function(AuthorizedAccountState) then) =
       _$AuthorizedAccountStateCopyWithImpl<$Res>;
+  $Res call({Account account});
 }
 
 /// @nodoc
@@ -226,57 +229,80 @@ class _$AuthorizedAccountStateCopyWithImpl<$Res>
 
   @override
   AuthorizedAccountState get _value => super._value as AuthorizedAccountState;
+
+  @override
+  $Res call({
+    Object? account = freezed,
+  }) {
+    return _then(AuthorizedAccountState(
+      account: account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$AuthorizedAccountState extends AuthorizedAccountState {
-  const _$AuthorizedAccountState() : super._();
+  const _$AuthorizedAccountState({required this.account}) : super._();
+
+  @override
+  final Account account;
 
   @override
   String toString() {
-    return 'AccountState.authorized()';
+    return 'AccountState.authorized(account: $account)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthorizedAccountState);
+        (other.runtimeType == runtimeType &&
+            other is AuthorizedAccountState &&
+            (identical(other.account, account) || other.account == account));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, account);
+
+  @JsonKey(ignore: true)
+  @override
+  $AuthorizedAccountStateCopyWith<AuthorizedAccountState> get copyWith =>
+      _$AuthorizedAccountStateCopyWithImpl<AuthorizedAccountState>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authorized,
+    required TResult Function(Account account) authorized,
     required TResult Function() unauthorized,
   }) {
-    return authorized();
+    return authorized(account);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
   }) {
-    return authorized?.call();
+    return authorized?.call(account);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
     required TResult orElse(),
   }) {
     if (authorized != null) {
-      return authorized();
+      return authorized(account);
     }
     return orElse();
   }
@@ -317,8 +343,14 @@ class _$AuthorizedAccountState extends AuthorizedAccountState {
 }
 
 abstract class AuthorizedAccountState extends AccountState {
-  const factory AuthorizedAccountState() = _$AuthorizedAccountState;
+  const factory AuthorizedAccountState({required Account account}) =
+      _$AuthorizedAccountState;
   const AuthorizedAccountState._() : super._();
+
+  Account get account;
+  @JsonKey(ignore: true)
+  $AuthorizedAccountStateCopyWith<AuthorizedAccountState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -364,7 +396,7 @@ class _$UnauthorizedAccountState extends UnauthorizedAccountState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authorized,
+    required TResult Function(Account account) authorized,
     required TResult Function() unauthorized,
   }) {
     return unauthorized();
@@ -374,7 +406,7 @@ class _$UnauthorizedAccountState extends UnauthorizedAccountState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
   }) {
     return unauthorized?.call();
@@ -384,7 +416,7 @@ class _$UnauthorizedAccountState extends UnauthorizedAccountState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authorized,
+    TResult Function(Account account)? authorized,
     TResult Function()? unauthorized,
     required TResult orElse(),
   }) {

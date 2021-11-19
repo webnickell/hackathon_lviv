@@ -6,7 +6,7 @@ part 'habit.g.dart';
 
 @JsonSerializable()
 class HabitResponse {
-  final String id;
+  final String? id;
   final String name;
   final String description;
   final HabitType type;
@@ -15,7 +15,7 @@ class HabitResponse {
   const HabitResponse({
     required this.name,
     required this.description,
-    required this.id,
+    this.id,
     required this.type,
     required this.designType,
   });
@@ -33,16 +33,16 @@ class HabitResponse {
 
   Map<String, Object?> toJson() => _$HabitResponseToJson(this);
 
-  Habit toModel() => Habit(
+  Habit toModel([String? id]) => Habit(
         name: name,
         description: description,
-        id: id,
+        id: id ?? this.id,
         type: type,
         designType: designType,
       );
 
-  ShortHabit toShortModel() => ShortHabit(
-        id: id,
+  ShortHabit toShortModel([String? id]) => ShortHabit(
+        id: id ?? this.id!,
         name: name,
         type: type,
         progress: 0,

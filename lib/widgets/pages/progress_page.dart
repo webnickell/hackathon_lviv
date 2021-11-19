@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hackathon_lviv/domain/bloc/progress_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
 import 'package:hackathon_lviv/widgets/components/week_line.dart';
 
 class ProgressPage extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hackathon_lviv/domain/models/habit.dart';
+import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 
 part 'add_habit_bloc.freezed.dart';
 
@@ -18,12 +19,18 @@ abstract class AddHabitState with _$AddHabitState {
 
   const factory AddHabitState.initial() = AddHabitInitial;
   const factory AddHabitState.loading() = HabitLoadInProgress;
-  const factory AddHabitState.created() = HabitCreationSuccess;
+  const factory AddHabitState.created({
+    required Habit habit,
+  }) = HabitCreationSuccess;
   const factory AddHabitState.error() = HabitCreationError;
 }
 
 class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
-  AddHabitBloc() : super(const AddHabitState.initial());
+  AddHabitBloc({
+    required this.habitRepository,
+  }) : super(const AddHabitState.initial());
+
+  final HabitRepository habitRepository;
 
   @override
   Stream<AddHabitState> mapEventToState(AddHabitEvent event) => event.map(
@@ -32,23 +39,14 @@ class AddHabitBloc extends Bloc<AddHabitEvent, AddHabitState> {
 
   Stream<AddHabitState> _mapSubmitButtonPressedToState(
       SubmitButtonPressed event) async* {
-    yield state.maybeMap(
-      orElse: () => const AddHabitState.loading(),
-      loading: (loading) => loading,
-    );
+    yield const AddHabitState.loading();
 
     try {
-      final res = await Future.delayed(const Duration(seconds: 1));
+      final res = await habitRepository.createHabit(event.habit);
 
-      yield state.maybeMap(
-        orElse: () => const AddHabitState.created(),
-        loading: (created) => created,
-      );
+      yield AddHabitState.created(habit: res);
     } catch (e) {
-      yield state.maybeMap(
-        orElse: () => const AddHabitState.error(),
-        error: (error) => error,
-      );
+      yield const AddHabitState.error();
     }
   }
 }

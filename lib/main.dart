@@ -6,7 +6,7 @@ import 'package:hackathon_lviv/app.dart';
 import 'package:hackathon_lviv/data/firestore_repository/week_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:provider/provider.dart';
-import 'package:hackathon_lviv/domain/bloc/account_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 
 void main() {
   _mainAsync();

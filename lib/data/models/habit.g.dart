@@ -10,7 +10,7 @@ HabitResponse _$HabitResponseFromJson(Map<String, dynamic> json) =>
     HabitResponse(
       name: json['name'] as String,
       description: json['description'] as String,
-      id: json['id'] as String,
+      id: json['id'] as String?,
       type: $enumDecode(_$HabitTypeEnumMap, json['type']),
       designType: $enumDecode(_$DesignTypeEnumMap, json['designType']),
     );
