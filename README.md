@@ -1,16 +1,11 @@
 # hackathon_lviv
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Ссылка на апк] (https://drive.google.com/drive/folders/1nfVnPOPQZgJGhvAo0Tgj6cq4CIjqK26w?usp=sharing)
+[Ссылка на репозиторий] (https://github.com/webnickell/hackathon_lviv)
+Приложение для создания привычек. 
+Вход происходит только через гугл, другое настроить не успели. 
+Оно синхронизиуется с вашими устройствами. То есть, если зайдете через другие девайсы под этим акком, то оно покажет те же самые данные. 
+Как пользоватся.
+На главном экране есть страница аккаунта, там отображается ваша аватарка и имя. + в дальнейшем там будет ваш прогресс в виде дизайнерского сада. Где полезные привычки будут цветками, а вредные сорняками
+На страинце меню можно увидеть список полезных и вредных привычек. Если список пустой, то там лоадер. Создать можно через большую синюю кнопку, и выбрать нужные опции. Затем, чтобы отметить, что вы соблюдаете привычку, то кликните на нее из списка привычек, и вы увидите календарь ручной работы. Где можно отметить дни, которые соблюдалась привычка. Синий, это то, что вы сейчас выбрали, зеленый то, что ранее. чтобы подтвердить нужно нажать сабмит. Затем вернитесь на список привычек и потяните вверх, список обновится и вы увидите обновленные счетчики.
