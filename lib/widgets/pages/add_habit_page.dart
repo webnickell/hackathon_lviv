@@ -16,10 +16,10 @@ class AddHabitPage extends StatefulWidget {
 }
 
 class _AddHabitPageState extends State<AddHabitPage> {
-  BehaviorSubject<HabitType> _habitType =
-      BehaviorSubject.seeded(HabitType.useful);
-  BehaviorSubject<DesignType> _designType =
-      BehaviorSubject.seeded(DesignType.second);
+  final _habitType = BehaviorSubject<HabitType>.seeded(HabitType.useful);
+  final _designType = BehaviorSubject<DesignType>.seeded(DesignType.second);
+  final _nameController = TextEditingController(text: '');
+  final _descriptionController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,8 @@ class _AddHabitPageState extends State<AddHabitPage> {
                   AddHabitEvent.submit(
                     habit: Habit(
                       id: '3',
+                      name: _nameController.text,
+                      description: _descriptionController.text,
                       designType: _designType.value,
                       type: _habitType.value,
                     ),
@@ -62,9 +64,16 @@ class _AddHabitPageState extends State<AddHabitPage> {
             const SizedBox(height: 20.0),
             const Text('Create habit'),
             const SizedBox(height: 20.0),
-            const TextField(
+            TextField(
+              controller: _nameController,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Habit name'),
+            ),
+            const SizedBox(height: 20.0),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), labelText: 'Description'),
             ),
             const SizedBox(height: 20.0),
             const Text('Please, select habit type'),

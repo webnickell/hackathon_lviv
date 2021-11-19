@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hackathon_lviv/domain/models/habit.dart';
-import 'package:hackathon_lviv/domain/models/month_track.dart';
+import 'package:hackathon_lviv/domain/models/monthly_track.dart';
 
 part 'habit_card_bloc.freezed.dart';
 
