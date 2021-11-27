@@ -54,7 +54,7 @@ class _RootPageState extends State<RootPage> {
       body: IndexedStack(
         index: _section,
         children: [
-          MapPage(),
+          const MapPage(),
           BlocProvider<CreateEventBloc>(
             create: (_) => CreateEventBloc(
               creatorId: widget.userId,
@@ -63,7 +63,7 @@ class _RootPageState extends State<RootPage> {
             ),
             child: const CreateEventPage(),
           ),
-          AccountPage(),
+          const AccountPage(),
         ],
       ),
     );

@@ -1,8 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/create_event/create_event_bloc.dart';
 import 'package:hackathon_lviv/widgets/components/progress_bar.dart';
 import 'package:hackathon_lviv/widgets/pages/create%20event/pick_location_page.dart';
+
+enum EventType {
+  private,
+  public,
+}
 
 class LocationPhotoPage extends StatelessWidget {
   const LocationPhotoPage({Key? key}) : super(key: key);
@@ -39,6 +45,15 @@ class LocationPhotoPage extends StatelessWidget {
                   ),
                 ),
                 child: const Text('Select'),
+              ),
+              const SizedBox(height: 20.0),
+              CupertinoSlidingSegmentedControl<EventType>(
+                groupValue: EventType.public,
+                children: const <EventType, Widget>{
+                  EventType.public: Text('Public'),
+                  EventType.private: Text('Private')
+                },
+                onValueChanged: (value) {},
               ),
             ],
           ),
