@@ -8,4 +8,6 @@ extension DateTimeHelpers on DateTime {
 
   static final DateFormat _monthFormatter = DateFormat('MMMM');
   String get formatTextMonthOnly => _monthFormatter.format(this);
+
+  String get formatHumanFriendly => this.toString();
 }
