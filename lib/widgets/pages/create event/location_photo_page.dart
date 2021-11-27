@@ -44,16 +44,33 @@ class LocationPhotoPage extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 0,
-          right: 0,
+          left: 16.0,
+          right: 16.0,
           bottom: 24.0,
-          child: ElevatedButton(
-            onPressed: () => context.read<CreateEventBloc>().add(
-                  SubmitButtonPressed(),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => context.read<CreateEventBloc>().add(
+                        const BackButtonPressed(
+                          viewSource: CreateEventViewSource.dateFaq,
+                        ),
+                      ),
+                  child: const Text('Back'),
                 ),
-            child: const Text(
-              'Finish',
-            ),
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => context.read<CreateEventBloc>().add(
+                        SubmitButtonPressed(),
+                      ),
+                  child: const Text(
+                    'Finish',
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

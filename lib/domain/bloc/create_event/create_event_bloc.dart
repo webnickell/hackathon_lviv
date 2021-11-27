@@ -66,16 +66,21 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
       );
     });
     on<AddPhotosButtonPressed>((event, emit) async {
-      List<XFile>? images = await _picker.pickMultiImage();
       List<String> imageUrls = [];
 
-      if (images != null) {
-        for (var image in images) {
-          String ref = '/events/${_event.id}/${image.name}';
+      try {
+        List<XFile>? images = await _picker.pickMultiImage();
 
-          await storage.ref(ref).putFile(File(image.path));
-          imageUrls.add(await storage.ref(ref).getDownloadURL());
+        if (images != null) {
+          for (var image in images) {
+            String ref = '/events/${_event.id}/${image.name}';
+
+            await storage.ref(ref).putFile(File(image.path));
+            imageUrls.add(await storage.ref(ref).getDownloadURL());
+          }
         }
+      } catch (e) {
+        emit(EventCreateError());
       }
       _event = _event.copyWith(images: imageUrls);
     });
@@ -86,13 +91,20 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
         ),
       );
     });
-    on<SubmitButtonPressed>((event, emit) {});
-  } 
+    on<SubmitButtonPressed>((event, emit) async {
+      await repository.createEvent(_event);
+      emit(EventCreateSuccess());
+      emit(
+        CreateEventPageLoadSuccess(
+          viewSource: CreateEventViewSource.nameDescription,
+        ),
+      );
+    });
+  }
 
   final String creatorId;
   final EventRepository repository;
   final FirebaseStorage storage;
+  final ImagePicker _picker = ImagePicker();
   late Event _event;
-
-  ImagePicker _picker = ImagePicker();
 }

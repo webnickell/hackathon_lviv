@@ -55,7 +55,9 @@ class AuthorizedApp extends StatelessWidget {
                     ),
                   )
                 ],
-                child: const RootPage(),
+                child: RootPage(
+                  userId: state.account.uid,
+                ),
               ),
         },
       ),

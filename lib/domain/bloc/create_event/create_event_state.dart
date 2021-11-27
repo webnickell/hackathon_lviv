@@ -15,3 +15,5 @@ class CreateEventPageLoadSuccess extends CreateEventState {
 }
 
 class EventCreateSuccess extends CreateEventState {}
+
+class EventCreateError extends CreateEventState {}

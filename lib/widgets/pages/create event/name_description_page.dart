@@ -67,8 +67,8 @@ class _NameDescriptionPageState extends State<NameDescriptionPage> {
           ),
         ),
         Positioned(
-          left: 0,
-          right: 0,
+          left: 16.0,
+          right: 16.0,
           bottom: 24.0,
           child: ElevatedButton(
             onPressed: () => context.read<CreateEventBloc>().add(

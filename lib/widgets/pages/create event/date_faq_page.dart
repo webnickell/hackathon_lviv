@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/create_event/create_event_bloc.dart';
 import 'package:hackathon_lviv/widgets/components/progress_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:rxdart/subjects.dart';
@@ -105,14 +107,37 @@ class _DateFaqPageState extends State<DateFaqPage> {
           ),
         ),
         Positioned(
-          left: 0,
-          right: 0,
+          left: 16.0,
+          right: 16.0,
           bottom: 24.0,
-          child: ElevatedButton(
-            onPressed: () => null,
-            child: const Text(
-              'Next',
-            ),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => context.read<CreateEventBloc>().add(
+                        const BackButtonPressed(
+                          viewSource: CreateEventViewSource.nameDescription,
+                        ),
+                      ),
+                  child: const Text('Back'),
+                ),
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => context.read<CreateEventBloc>().add(
+                        DateFaqSubmitted(
+                          endsAt: _endsAt.value,
+                          startsAt: _startsAt.value,
+                          faq: _faqController.text,
+                        ),
+                      ),
+                  child: const Text(
+                    'Next',
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

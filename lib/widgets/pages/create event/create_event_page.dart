@@ -21,7 +21,46 @@ class _CreateEventPageState extends State<CreateEventPage> {
       appBar: AppBar(
         title: const Text('Create new event'),
       ),
-      body: BlocBuilder<CreateEventBloc, CreateEventState>(
+      body: BlocConsumer<CreateEventBloc, CreateEventState>(
+        listener: (context, state) {
+          if (state is EventCreateSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Center(
+                  child: Text(
+                    'Event created',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                duration: const Duration(seconds: 2),
+                elevation: 3,
+                margin: const EdgeInsets.all(12.0),
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0)),
+                backgroundColor: Colors.green,
+              ),
+            );
+          } else if (state is EventCreateError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Center(
+                  child: Text(
+                    'Error occured',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                duration: const Duration(seconds: 2),
+                elevation: 3,
+                margin: const EdgeInsets.all(12.0),
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0)),
+                backgroundColor: Colors.red[400],
+              ),
+            );
+          }
+        },
+        listenWhen: (prev, curr) =>
+            curr is EventCreateSuccess || curr is EventCreateError,
         buildWhen: (prev, curr) => curr is CreateEventPageLoadSuccess,
         builder: (context, state) {
           switch ((state as CreateEventPageLoadSuccess).viewSource) {
