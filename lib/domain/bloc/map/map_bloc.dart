@@ -33,6 +33,11 @@ abstract class MapState with _$MapState {
     @Default(false) bool loadedAllItems,
   }) = DataMapState;
   const factory MapState.error() = ErrorMapState;
+
+  Coords? get location => maybeMap(
+        orElse: () => null,
+        data: (data) => data.centerLocation,
+      );
 }
 
 class MapBloc extends Bloc<MapEvent, MapState> {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_lviv/widgets/pages/account_page.dart';
 import 'package:hackathon_lviv/widgets/pages/habits_page.dart';
+import 'package:hackathon_lviv/widgets/pages/map_page.dart';
 import 'package:hackathon_lviv/widgets/pages/progress_page.dart';
 
 class RootPage extends StatefulWidget {
@@ -29,8 +30,8 @@ class _RootPageState extends State<RootPage> {
         onTap: _onButtonBarTap,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Habits',
+            icon: Icon(Icons.map),
+            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_rounded),
@@ -41,7 +42,7 @@ class _RootPageState extends State<RootPage> {
       body: IndexedStack(
         index: _section,
         children: const [
-          HabitsPage(),
+          MapPage(),
           AccountPage(),
         ],
       ),
