@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/data/firestore_repository/checked_days_firestore_repository.dart';
@@ -6,6 +7,7 @@ import 'package:hackathon_lviv/data/firestore_repository/event_firestore_reposit
 import 'package:hackathon_lviv/data/firestore_repository/habit_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/add_habit/add_habit_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/create_event/create_event_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/map/map_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:hackathon_lviv/domain/repository/event_repository.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
+import 'package:hackathon_lviv/widgets/pages/create%20event/create_event_page.dart';
 import 'package:hackathon_lviv/widgets/pages/habit_card_page.dart';
 import 'package:hackathon_lviv/widgets/pages/root_page.dart';
 import 'package:provider/provider.dart';
@@ -27,22 +30,6 @@ class AuthorizedApp extends StatelessWidget {
         (context.read<AuthorizationBloc>().state) as AuthorizedAccountState;
     return MultiProvider(
       providers: [
-        Provider<HabitRepository>(
-          create: (ctx) {
-            return HabitFirestoreRepository(
-              authId: state.account.uid,
-              firestore: FirebaseFirestore.instance,
-            );
-          },
-        ),
-        Provider<CheckedDaysRepository>(
-          create: (ctx) {
-            return CheckedDaysFirestoreRepository(
-              authId: state.account.uid,
-              firestore: FirebaseFirestore.instance,
-            );
-          },
-        ),
         Provider<EventRepository>(
           create: (ctx) {
             return EventFirestoreRepository(
@@ -68,20 +55,9 @@ class AuthorizedApp extends StatelessWidget {
                     ),
                   )
                 ],
-                child: const RootPage(),
-              ),
-          AddHabitPage.routeName: (ctx) => BlocProvider<AddHabitBloc>(
-                create: (context) => AddHabitBloc(
-                  habitRepository: ctx.read<HabitRepository>(),
+                child: RootPage(
+                  userId: state.account.uid,
                 ),
-                child: const AddHabitPage(),
-              ),
-          HabitCardPage.routeName: (ctx) => BlocProvider<HabitCardBloc>(
-                create: (ctx) => HabitCardBloc(
-                  habitRepository: ctx.read<HabitRepository>(),
-                  checkedDaysRepository: ctx.read<CheckedDaysRepository>(),
-                ),
-                child: const HabitCardPage(),
               ),
         },
       ),

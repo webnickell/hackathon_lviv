@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/app.dart';
+import 'package:hackathon_lviv/data/firestore_repository/event_firestore_repository.dart';
 import 'package:hackathon_lviv/data/firestore_repository/week_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:provider/provider.dart';
