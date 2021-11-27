@@ -26,11 +26,11 @@ class EventFirestoreRepository extends EventRepository {
   }
 
   @override
-  Future<Event> updateEvent(Event habit) async {
-    final req = EventResponse.fromModel(habit);
+  Future<Event> updateEvent(Event event) async {
+    final req = EventResponse.fromModel(event);
 
-    await events.doc(habit.id).set(req);
-    return habit;
+    await events.doc(event.id).set(req);
+    return event;
   }
 
   @override
@@ -52,5 +52,50 @@ class EventFirestoreRepository extends EventRepository {
       ),
     );
     return PaginatedList(data: list, cursor: null, loadedAllItems: true);
+  }
+
+  @override
+  Future<Event?> eventById(String id) async {
+    return Event(
+      id: id,
+      begin: DateTime.now(),
+      end: DateTime.now(),
+      postScriptum: '',
+      name: 'Name',
+      description: 'Description',
+      coords: Coords(
+        lat: 49.50,
+        lng: 24.00,
+      ),
+      authorId: '',
+      images: [
+        'https://deih43ym53wif.cloudfront.net/lviv-ukraine-shutterstock_231990358-2_996b60addc.jpeg',
+        'https://cdn.getyourguide.com/img/location/595263265eaa0.jpeg/92.jpg',
+        'https://kidpassage.com/images/publications/images/lvov-aprele-otdyh-pogoda-photo2(1).jpg'
+      ],
+    );
+    final res = await events.doc(id).get();
+    return res.data()?.toModel();
+  }
+
+  @override
+  Future<List<String>> eventMembers(String id) async {
+    final res = await events.doc(id).collection('members').get();
+    return res.docs.map((e) => e.id).toList();
+  }
+
+  @override
+  Future<bool> addParticipance(
+    String id,
+    String userId,
+  ) async {
+    await events.doc(id).collection('members').doc(userId).set(const {});
+    return true;
+  }
+
+  @override
+  Future<bool> removeParticipance(String id, String userId) async {
+    await events.doc(id).collection('members').doc(userId).delete();
+    return true;
   }
 }
