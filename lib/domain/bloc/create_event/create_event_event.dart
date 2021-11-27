@@ -17,16 +17,25 @@ class NameDescriptionSubmitted extends CreateEventEvent {
   });
 }
 
-class DateLocationSubmitted extends CreateEventEvent {
+class DateFaqSubmitted extends CreateEventEvent {
   final DateTime startsAt;
   final DateTime endsAt;
-  final Coords coords;
+  final String faq;
 
-  const DateLocationSubmitted({
+  const DateFaqSubmitted({
     required this.startsAt,
     required this.endsAt,
-    required this.coords,
+    required this.faq,
   });
+}
+
+class LocationSubmitted extends CreateEventEvent {
+  final LatLng location;
+
+  const LocationSubmitted({required this.location});
+
+  @override
+  List<Object?> get props => [location];
 }
 
 class BackButtonPressed extends CreateEventEvent {

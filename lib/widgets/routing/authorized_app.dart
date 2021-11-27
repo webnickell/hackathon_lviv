@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/data/firestore_repository/checked_days_firestore_repository.dart';
@@ -32,14 +33,6 @@ class AuthorizedApp extends StatelessWidget {
         Provider<EventRepository>(
           create: (ctx) {
             return EventFirestoreRepository(
-              FirebaseFirestore.instance,
-              state.account.uid,
-            );
-          },
-        ),
-        Provider<EventRepository>(
-          create: (ctx) {
-            return EventFirestoreRepository(
               firestore: FirebaseFirestore.instance,
             );
           },
@@ -63,13 +56,6 @@ class AuthorizedApp extends StatelessWidget {
                   )
                 ],
                 child: const RootPage(),
-              ),
-          CreateEventPage.routeName: (ctx) => BlocProvider<CreateEventBloc>(
-                create: (context) => CreateEventBloc(
-                  creatorId: state.account.uid,
-                  repository: context.read<EventRepository>(),
-                ),
-                child: const CreateEventPage(),
               ),
         },
       ),

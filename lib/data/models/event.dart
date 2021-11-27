@@ -76,6 +76,7 @@ class EventResponse {
         coords: Coords(lat: location.latitude, lng: location.longitude),
         authorId: authorId,
         begin: startDate,
+        end: endDate,
         images: images,
         postScriptum: postScriptum,
       );
