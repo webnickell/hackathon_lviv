@@ -9,14 +9,13 @@ import 'package:hackathon_lviv/util/paginated_list.dart';
 
 class EventFirestoreRepository extends EventRepository {
   final FirebaseFirestore firestore;
-  final String authId;
   late CollectionReference<EventResponse> events =
       firestore.collection('events').withConverter<EventResponse>(
             fromFirestore: (s, o) => EventResponse.fromDocument(s, o),
             toFirestore: (r, o) => r.toDocument(),
           );
 
-  EventFirestoreRepository(this.firestore, this.authId);
+  EventFirestoreRepository({required this.firestore});
 
   @override
   Future<Event> createEvent(Event event) async {

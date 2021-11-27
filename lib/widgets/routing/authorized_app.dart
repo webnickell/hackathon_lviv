@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/data/firestore_repository/checked_days_firestore_repository.dart';
+import 'package:hackathon_lviv/data/firestore_repository/event_firestore_repository.dart';
 import 'package:hackathon_lviv/data/firestore_repository/habit_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/add_habit/add_habit_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
 import 'package:hackathon_lviv/domain/repository/checked_days_repository.dart';
+import 'package:hackathon_lviv/domain/repository/event_repository.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
@@ -36,6 +38,13 @@ class AuthorizedApp extends StatelessWidget {
           create: (ctx) {
             return CheckedDaysFirestoreRepository(
               authId: state.account.uid,
+              firestore: FirebaseFirestore.instance,
+            );
+          },
+        ),
+        Provider<EventRepository>(
+          create: (ctx) {
+            return EventFirestoreRepository(
               firestore: FirebaseFirestore.instance,
             );
           },
