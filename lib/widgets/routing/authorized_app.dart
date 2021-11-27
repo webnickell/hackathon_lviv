@@ -7,6 +7,7 @@ import 'package:hackathon_lviv/data/firestore_repository/habit_firestore_reposit
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/add_habit/add_habit_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/map/map_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
 import 'package:hackathon_lviv/domain/repository/checked_days_repository.dart';
 import 'package:hackathon_lviv/domain/repository/event_repository.dart';
@@ -61,6 +62,11 @@ class AuthorizedApp extends StatelessWidget {
                       weekRepository: ctx.read<IWeekRepository>(),
                     ),
                   ),
+                  BlocProvider(
+                    create: (ctx) => MapBloc(
+                      eventRepository: ctx.read<EventRepository>(),
+                    ),
+                  )
                 ],
                 child: const RootPage(),
               ),

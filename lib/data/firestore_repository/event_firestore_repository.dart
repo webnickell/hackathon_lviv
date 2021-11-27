@@ -39,8 +39,19 @@ class EventFirestoreRepository extends EventRepository {
     required Coords coords,
     Object? cursor,
     int limit = 15,
-  }) {
-    // TODO: implement eventsByLocation
-    throw UnimplementedError();
+  }) async {
+    final list = List.generate(
+      10,
+      (index) => ShortEvent(
+        id: '$index',
+        coords: Coords(lat: coords.lat + 0.00005, lng: coords.lng),
+        begin: DateTime.now(),
+        previewUrl:
+            'https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300',
+        name: 'Event $index',
+        members: index % 5,
+      ),
+    );
+    return PaginatedList(data: list, cursor: null, loadedAllItems: true);
   }
 }
