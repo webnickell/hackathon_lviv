@@ -4,7 +4,6 @@ import 'package:hackathon_lviv/domain/models/event.dart';
 import 'package:hackathon_lviv/domain/models/short_event.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
 class EventResponse {
   final String id;
   final String name;

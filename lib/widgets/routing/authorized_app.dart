@@ -8,15 +8,18 @@ import 'package:hackathon_lviv/data/firestore_repository/habit_firestore_reposit
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/add_habit/add_habit_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/create_event/create_event_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/event/event_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/map/map_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
+import 'package:hackathon_lviv/domain/repository/account_repository.dart';
 import 'package:hackathon_lviv/domain/repository/checked_days_repository.dart';
 import 'package:hackathon_lviv/domain/repository/event_repository.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
 import 'package:hackathon_lviv/widgets/pages/create%20event/create_event_page.dart';
+import 'package:hackathon_lviv/widgets/pages/event_page.dart';
 import 'package:hackathon_lviv/widgets/pages/habit_card_page.dart';
 import 'package:hackathon_lviv/widgets/pages/root_page.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +61,14 @@ class AuthorizedApp extends StatelessWidget {
                 child: RootPage(
                   userId: state.account.uid,
                 ),
+              ),
+          EventPage.routeName: (ctx) => BlocProvider<EventBloc>(
+                create: (ctx) => EventBloc(
+                  accountRepository: ctx.read<AccountRepository>(),
+                  eventRepository: ctx.read<EventRepository>(),
+                  uid: state.authorizedId!,
+                ),
+                child: const EventPage(),
               ),
         },
       ),

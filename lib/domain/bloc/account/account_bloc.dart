@@ -14,6 +14,11 @@ abstract class AccountState with _$AccountState {
     required Account account,
   }) = AuthorizedAccountState;
   const factory AccountState.unauthorized() = UnauthorizedAccountState;
+
+  String? get authorizedId => maybeMap(
+        orElse: () => null,
+        authorized: (auth) => auth.account.uid,
+      );
 }
 
 class AuthorizationBloc extends Cubit<AccountState> {
