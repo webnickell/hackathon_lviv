@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hackathon_lviv/data/models/create_event.dart';
 import 'package:hackathon_lviv/data/models/event.dart';
 import 'package:hackathon_lviv/domain/models/event.dart';
 import 'package:hackathon_lviv/domain/models/short_event.dart';
