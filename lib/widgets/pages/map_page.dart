@@ -19,7 +19,7 @@ class _MapPageState extends State<MapPage> {
     zoom: 14.4746,
   );
 
-  late GoogleMapController _controller;
+  GoogleMapController? _controller;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //bottomSheet: const MapEventsScroll(),
+      bottomSheet: const MapEventsScroll(),
       body: MultiBlocListener(
         listeners: [
           BlocListener<MapBloc, MapState>(
@@ -43,17 +43,7 @@ class _MapPageState extends State<MapPage> {
               final location = state.location;
               if (location == null) return;
               final latLng = LatLng(location.lat, location.lng);
-              _controller.moveCamera(CameraUpdate.newLatLng(latLng));
-            },
-          ),
-          BlocListener<MapBloc, MapState>(
-            listenWhen: (prev, curr) =>
-                prev is! DataMapState && curr is DataMapState,
-            listener: (ctx, state) {
-              showBottomSheet(
-                context: context,
-                builder: (ctx) => const MapEventsScroll(),
-              );
+              _controller?.moveCamera(CameraUpdate.newLatLng(latLng));
             },
           ),
         ],

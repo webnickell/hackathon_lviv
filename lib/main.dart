@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/app.dart';
 import 'package:hackathon_lviv/data/firestore_repository/event_firestore_repository.dart';
+import 'package:hackathon_lviv/data/firestore_repository/account_firestore_repository.dart';
 import 'package:hackathon_lviv/data/firestore_repository/week_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
+
+import 'domain/repository/account_repository.dart';
 
 void main() {
   _mainAsync();
@@ -21,6 +25,12 @@ Future<void> _mainAsync() async {
     MultiProvider(
       providers: [
         Provider<IWeekRepository>(create: (ctx) => WeekFirestoreRepository()),
+        Provider<AccountRepository>(
+          create: (ctx) => AccountFirestoreRepository(
+            firestore: FirebaseFirestore.instance,
+            authId: '',
+          ),
+        )
       ],
       child: MultiBlocProvider(
         providers: [
