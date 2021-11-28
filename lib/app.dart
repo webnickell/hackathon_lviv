@@ -21,7 +21,21 @@ class _HackathonAppState extends State<HackathonApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: const MaterialColor(
+          0xFF5865F2,
+          <int, Color>{
+            50: Color(0xFF5865F2),
+            100: Color(0xFF5865F2),
+            200: Color(0xFF5865F2),
+            300: Color(0xFF5865F2),
+            400: Color(0xFF5865F2),
+            500: Color(0xFF5865F2),
+            600: Color(0xFF5865F2),
+            700: Color(0xFF5865F2),
+            800: Color(0xFF5865F2),
+            900: Color(0xFF5865F2),
+          },
+        ),
       ),
       home: BlocBuilder<AuthorizationBloc, AccountState>(
         builder: (ctx, state) => state.map(

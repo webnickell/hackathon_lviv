@@ -20,7 +20,8 @@ class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
     widget.event;
-    return Padding(
+    return Container(
+      color: Colors.white,
       padding: const EdgeInsets.all(4.0),
       child: ConstrainedBox(
         constraints: BoxConstraints.loose(Size.fromWidth(150)),
@@ -47,7 +48,7 @@ class _EventCardState extends State<EventCard> {
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(widget.event.name),
                         Text('${widget.event.members} members'),

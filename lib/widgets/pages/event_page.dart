@@ -84,16 +84,18 @@ class _ContentEventPageState extends State<_ContentEventPage> {
         child: Row(
           children: [
             Expanded(
-              child: OutlinedButton(
+              child: FloatingActionButton(
                 onPressed: () => context.read<SocialShareBloc>().add(
                       ShareEventOnInstagramButtonPressed(
                         event: widget.event,
                       ),
                     ),
+                backgroundColor: Colors.black26,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
+                  children: const [
                     Icon(Icons.ios_share),
+                    SizedBox(width: 4.0),
                     Text('Share'),
                   ],
                 ),

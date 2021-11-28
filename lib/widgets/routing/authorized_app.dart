@@ -46,7 +46,21 @@ class AuthorizedApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: RootPage.routeName,
         theme: ThemeData(
-          primaryColor: const Color(0xFF5865F2),
+          primarySwatch: const MaterialColor(
+            0xFF5865F2,
+            <int, Color>{
+              50: Color(0xFF5865F2),
+              100: Color(0xFF5865F2),
+              200: Color(0xFF5865F2),
+              300: Color(0xFF5865F2),
+              400: Color(0xFF5865F2),
+              500: Color(0xFF5865F2),
+              600: Color(0xFF5865F2),
+              700: Color(0xFF5865F2),
+              800: Color(0xFF5865F2),
+              900: Color(0xFF5865F2),
+            },
+          ),
         ),
         routes: {
           RootPage.routeName: (ctx) => MultiBlocProvider(
