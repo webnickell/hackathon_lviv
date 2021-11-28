@@ -48,6 +48,25 @@ class EventFirestoreRepository extends EventRepository {
   }
 
   @override
+  Future<PaginatedList<ShortEvent>> eventsByAuthor({
+    required String id,
+    Object? cursor,
+    int limit = 15,
+  }) async {
+    final start = cursor == null
+        ? events
+        : events.startAfterDocument(cursor as DocumentSnapshot);
+    final query =
+        await start.where('authorId', isEqualTo: id).limit(limit).get();
+    final res = query.docs.map((e) => e.data().toShortModel()).toList();
+    return PaginatedList(
+      data: res,
+      cursor: query.docs.last,
+      loadedAllItems: true,
+    );
+  }
+
+  @override
   Future<Event?> eventById(String id) async {
     final res = await events.doc(id).get();
     return res.data()?.toModel();

@@ -10,6 +10,12 @@ abstract class EventRepository {
     int limit = 15,
   });
 
+  Future<PaginatedList<ShortEvent>> eventsByAuthor({
+    required String id,
+    Object? cursor,
+    int limit = 15,
+  });
+
   Future<Event?> eventById(String id);
 
   Future<List<String>> eventMembers(String id);
