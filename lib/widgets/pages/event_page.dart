@@ -21,6 +21,7 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+  late String id;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -28,6 +29,7 @@ class _EventPageState extends State<EventPage> {
     final args = ModalRoute.of(context)?.settings.arguments;
     if (args == null) return;
     final a = args as EventNavigationBundle;
+    id = a.id;
     context.read<EventBloc>().add(EventEvent.load(a.id));
   }
 
@@ -52,6 +54,7 @@ class _EventPageState extends State<EventPage> {
           data: (data) => _ContentEventPage(
             event: data.event,
             members: data.members,
+            loading: data.loading,
           ),
         ),
       ),
@@ -64,10 +67,12 @@ class _ContentEventPage extends StatefulWidget {
     Key? key,
     required this.event,
     required this.members,
+    required this.loading,
   }) : super(key: key);
 
   final Event event;
   final List<Account> members;
+  final bool loading;
 
   @override
   State<_ContentEventPage> createState() => _ContentEventPageState();
@@ -123,63 +128,69 @@ class _ContentEventPageState extends State<_ContentEventPage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: mediaQuery.size.width,
-              height: mediaQuery.size.width,
-              child: Stack(
-                children: [
-                  PageView.builder(
-                    controller: pageController,
-                    itemCount: widget.event.images.length,
-                    itemBuilder: (ctx, i) => Image.network(
-                      widget.event.images[i],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: AnimatedBuilder(
-                      animation: pageController,
-                      builder: (context, _) {
-                        return PageControl(
-                          pagesCount: widget.event.images.length,
-                          currentPage: pageController.page?.round() ?? 0,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Start at ${widget.event.begin.formatHumanFriendly}'),
-                  const SizedBox(height: 24),
-                  Text(widget.event.description),
-                  const SizedBox(height: 24),
-                  MembersComponent(members: widget.members),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    height: 300,
-                    child: GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        zoom: 13,
-                        target: LatLng(
-                            widget.event.coords.lat, widget.event.coords.lng),
+      body: RefreshIndicator(
+        onRefresh: () async =>
+            context.read<EventBloc>().add(EventEvent.load(widget.event.id)),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.loading) Center(child: CircularProgressIndicator()),
+              SizedBox(
+                width: mediaQuery.size.width,
+                height: mediaQuery.size.width,
+                child: Stack(
+                  children: [
+                    PageView.builder(
+                      controller: pageController,
+                      itemCount: widget.event.images.length,
+                      itemBuilder: (ctx, i) => Image.network(
+                        widget.event.images[i],
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-                ],
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: AnimatedBuilder(
+                        animation: pageController,
+                        builder: (context, _) {
+                          return PageControl(
+                            pagesCount: widget.event.images.length,
+                            currentPage: pageController.page?.round() ?? 0,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Start at ${widget.event.begin.formatHumanFriendly}'),
+                    const SizedBox(height: 24),
+                    Text(widget.event.description),
+                    const SizedBox(height: 24),
+                    MembersComponent(members: widget.members),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      height: 300,
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          zoom: 13,
+                          target: LatLng(
+                              widget.event.coords.lat, widget.event.coords.lng),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

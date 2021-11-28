@@ -43,12 +43,32 @@ class _MapEventsScrollState extends State<MapEventsScroll>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Text(
-                        'Events',
-                        style: headerStyle,
-                      ),
+                    Stack(
+                      children: [
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(12),
+                            child: Text(
+                              'Events',
+                              style: headerStyle,
+                            ),
+                          ),
+                        ),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.all(12),
+                              child: TextButton(
+                                child: Text('Refresh'),
+                                onPressed: () {
+                                  context.read<MapBloc>().add(
+                                      MapEvent.loadByCoords(
+                                          coords: data.centerLocation));
+                                  scrollController.jumpTo(0);
+                                },
+                              ),
+                            )),
+                      ],
                     ),
                     SizedBox(
                       height: 250,
