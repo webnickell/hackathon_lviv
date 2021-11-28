@@ -21,7 +21,7 @@ class AccountFirestoreRepository implements AccountRepository {
   Future<List<Account>> getAccountsByIds(List<String> ids) {
     if (ids.isEmpty) return Future.value([]);
     return users
-        .where(FieldPath.documentId, arrayContainsAny: ids)
+        .where(FieldPath.documentId, whereIn: ids)
         .get()
         .then((value) => value.docs.map((e) => e.data().toModel()).toList());
   }

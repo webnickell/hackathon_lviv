@@ -112,7 +112,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         events: s.events + res.data,
       );
     } catch (e) {
-      yield const MapState.error();
+      //yield const MapState.error();
     }
   }
 }

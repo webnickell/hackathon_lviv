@@ -71,25 +71,4 @@ class EventFirestoreRepository extends EventRepository {
     final res = await events.doc(id).get();
     return res.data()?.toModel();
   }
-
-  @override
-  Future<List<String>> eventMembers(String id) async {
-    final res = await events.doc(id).collection('members').get();
-    return res.docs.map((e) => e.id).toList();
-  }
-
-  @override
-  Future<bool> addParticipance(
-    String id,
-    String userId,
-  ) async {
-    await events.doc(id).collection('members').doc(userId).set(const {});
-    return true;
-  }
-
-  @override
-  Future<bool> removeParticipance(String id, String userId) async {
-    await events.doc(id).collection('members').doc(userId).delete();
-    return true;
-  }
 }

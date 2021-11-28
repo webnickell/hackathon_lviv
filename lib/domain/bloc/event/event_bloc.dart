@@ -4,6 +4,7 @@ import 'package:hackathon_lviv/domain/models/account.dart';
 import 'package:hackathon_lviv/domain/models/event.dart';
 import 'package:hackathon_lviv/domain/repository/account_repository.dart';
 import 'package:hackathon_lviv/domain/repository/event_repository.dart';
+import 'package:hackathon_lviv/domain/repository/members_repository.dart';
 
 part 'event_bloc.freezed.dart';
 
@@ -36,12 +37,14 @@ class EventBloc extends Bloc<EventEvent, EventState> {
   EventBloc({
     required this.eventRepository,
     required this.accountRepository,
-    required this.uid,
+    required this.membersRepository,
+    required this.userAccount,
   }) : super(const EventState.initial());
 
   final EventRepository eventRepository;
   final AccountRepository accountRepository;
-  final String uid;
+  final MembersRepository membersRepository;
+  final Account userAccount;
 
   @override
   Stream<EventState> mapEventToState(EventEvent event) => event.map(
@@ -61,13 +64,13 @@ class EventBloc extends Bloc<EventEvent, EventState> {
       if (res == null) {
         yield const EventState.notFound();
       } else {
-        final memberIds = await eventRepository.eventMembers(event.id);
+        final memberIds = await membersRepository.eventMembers(event.id);
         final members = await accountRepository.getAccountsByIds(memberIds);
 
         yield EventState.data(
           event: res,
           members: members,
-          participate: memberIds.contains(uid),
+          participate: memberIds.contains(userAccount.uid),
         );
       }
     } catch (e) {
@@ -82,11 +85,17 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     if (s is! DataEventState) return;
 
     if (s.participate) {
-      eventRepository.removeParticipance(s.event.id, uid);
+      membersRepository.removeParticipance(s.event.id, userAccount.uid);
     } else {
-      eventRepository.addParticipance(s.event.id, uid);
+      membersRepository.addParticipance(s.event.id, userAccount.uid);
     }
 
-    yield s.copyWith(participate: !s.participate);
+    yield s.copyWith(
+      participate: !s.participate,
+      members: s.participate
+          ? (s.members.toList()
+            ..removeWhere((element) => element.uid == userAccount.uid))
+          : s.members + [userAccount],
+    );
   }
 }
