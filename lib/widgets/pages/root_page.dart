@@ -3,7 +3,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/data/firestore_repository/event_firestore_repository.dart';
+import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/create_event/create_event_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/event_list/event_list_bloc.dart';
 import 'package:hackathon_lviv/domain/repository/event_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/account_page.dart';
 import 'package:hackathon_lviv/widgets/pages/create%20event/create_event_page.dart';
@@ -63,7 +65,16 @@ class _RootPageState extends State<RootPage> {
             ),
             child: const CreateEventPage(),
           ),
-          const AccountPage(),
+          BlocProvider<EventListBloc>(
+            create: (context) => EventListBloc(
+              context.read<EventRepository>(),
+              (context.read<AuthorizationBloc>().state
+                      as AuthorizedAccountState)
+                  .account
+                  .uid,
+            ),
+            child: const AccountPage(),
+          ),
         ],
       ),
     );

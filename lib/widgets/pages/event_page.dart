@@ -89,14 +89,14 @@ class _ContentEventPageState extends State<_ContentEventPage> {
         child: Row(
           children: [
             Expanded(
-              child: FloatingActionButton(
+              child: FloatingActionButton.extended(
                 onPressed: () => context.read<SocialShareBloc>().add(
                       ShareEventOnInstagramButtonPressed(
                         event: widget.event,
                       ),
                     ),
                 backgroundColor: Colors.black26,
-                child: Row(
+                label: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     Icon(Icons.ios_share),
@@ -108,20 +108,21 @@ class _ContentEventPageState extends State<_ContentEventPage> {
             ),
             const SizedBox(width: 12.0),
             Expanded(
-              child: FloatingActionButton(
+              child: FloatingActionButton.extended(
                 onPressed: () {
                   context
                       .read<EventBloc>()
                       .add(const EventEvent.toggleParticipate());
                 },
-                child: BlocBuilder<EventBloc, EventState>(
-                    builder: (context, state) {
-                  final participate = state.maybeMap(
-                    orElse: () => false,
-                    data: (data) => data.participate,
-                  );
-                  return Text(participate ? 'Cancel' : 'Join');
-                }),
+                label: BlocBuilder<EventBloc, EventState>(
+                  builder: (context, state) {
+                    final participate = state.maybeMap(
+                      orElse: () => false,
+                      data: (data) => data.participate,
+                    );
+                    return Text(participate ? 'Cancel' : 'Join');
+                  },
+                ),
               ),
             ),
           ],

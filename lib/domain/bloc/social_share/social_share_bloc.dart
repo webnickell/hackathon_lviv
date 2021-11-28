@@ -29,7 +29,8 @@ class SocialShareBloc extends Bloc<SocialShareEvent, SocialShareState> {
             coords: event.event.coords,
             id: event.event.id,
             members: 0,
-            previewUrl: event.event.images[0],
+            previewUrl:
+                event.event.images.isEmpty ? '' : event.event.images.first,
           ),
         ),
       );

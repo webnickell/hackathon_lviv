@@ -3,8 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
-import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
-import 'package:hackathon_lviv/widgets/components/week_line.dart';
+import 'package:hackathon_lviv/domain/bloc/event_list/event_list_bloc.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -19,8 +18,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
-    final progressBloc = context.read<ProgressBloc>();
-    progressBloc.add(const ProgressEvent.load());
+    context.read<EventListBloc>().add(LoadUsersEvents());
   }
 
   @override
@@ -39,13 +37,66 @@ class _AccountPageState extends State<AccountPage> {
                 imageUrl: state.account.photoUrl!,
               ),
             ),
+            const SliverToBoxAdapter(
+              child: const SizedBox(height: 20.0),
+            ),
             SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Text('Your quests'),
-                  SizedBox(height: 8.0),
-                  
-                ],
+              child: SizedBox(
+                child: BlocBuilder<EventListBloc, EventListState>(
+                  builder: (context, state) {
+                    if (state is EventListLoaded) {
+                      return Column(
+                        children: [
+                          const Text('Your events'),
+                          const SizedBox(height: 8.0),
+                          ...state.events
+                              .map(
+                                (event) => Card(
+                                  margin: const EdgeInsets.all(8.0),
+                                  shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  color: Colors.black12,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 70.0,
+                                          width: 70.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: event.previewUrl.isNotEmpty
+                                                  ? NetworkImage(
+                                                      event.previewUrl)
+                                                  : (AssetImage(
+                                                          'assets/default_trip.png')
+                                                      as ImageProvider),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16.0),
+                                        Text(
+                                          event.name,
+                                          style: const TextStyle(
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList()
+                        ],
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
               ),
             ),
             const SliverToBoxAdapter(
