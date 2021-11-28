@@ -36,6 +36,7 @@ class _DateFaqPageState extends State<DateFaqPage> {
   void _showDatePicker(
     ctx,
     Function(DateTime) onChanged,
+    DateTime initialDate,
   ) {
     showCupertinoModalPopup(
       context: ctx,
@@ -47,14 +48,10 @@ class _DateFaqPageState extends State<DateFaqPage> {
             Container(
               height: 400,
               child: CupertinoDatePicker(
-                initialDateTime: DateTime.now(),
+                initialDateTime: initialDate,
                 onDateTimeChanged: onChanged,
               ),
             ),
-            CupertinoButton(
-              child: const Text('OK'),
-              onPressed: () => Navigator.of(ctx).pop(),
-            )
           ],
         ),
       ),
@@ -69,30 +66,42 @@ class _DateFaqPageState extends State<DateFaqPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              const ProgressBar(isSelected: [true, false, false]),
+              const ProgressBar(isSelected: [true, true, false]),
               const SizedBox(height: 20.0),
               const Text(
                 'Select event dates',
               ),
               const SizedBox(height: 8.0),
-              OutlinedButton(
-                onPressed: () => _showDatePicker(
-                  context,
-                  (dateTime) => _startsAt.add(dateTime),
-                ),
-                child: Text(
-                  dateFormater.format(_startsAt.value),
-                ),
+              StreamBuilder<DateTime>(
+                stream: _startsAt,
+                builder: (context, snapshot) {
+                  return OutlinedButton(
+                    onPressed: () => _showDatePicker(
+                      context,
+                      (dateTime) => _startsAt.add(dateTime),
+                      snapshot.data!,
+                    ),
+                    child: Text(
+                      dateFormater.format(snapshot.data!),
+                    ),
+                  );
+                }
               ),
               const SizedBox(height: 8.0),
-              OutlinedButton(
-                onPressed: () => _showDatePicker(
-                  context,
-                  (dateTime) => _endsAt.add(dateTime),
-                ),
-                child: Text(
-                  dateFormater.format(_endsAt.value),
-                ),
+              StreamBuilder<DateTime>(
+                stream: _endsAt,
+                builder: (context, snapshot) {
+                  return OutlinedButton(
+                    onPressed: () => _showDatePicker(
+                      context,
+                      (dateTime) => _endsAt.add(dateTime),
+                      snapshot.data!
+                    ),
+                    child: Text(
+                      dateFormater.format(snapshot.data!),
+                    ),
+                  );
+                }
               ),
               const SizedBox(height: 8.0),
               TextField(

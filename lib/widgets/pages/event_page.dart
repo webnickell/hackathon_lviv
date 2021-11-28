@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hackathon_lviv/domain/bloc/event/event_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/social_share/social_share_bloc.dart';
 import 'package:hackathon_lviv/domain/models/account.dart';
 import 'package:hackathon_lviv/domain/models/event.dart';
 import 'package:hackathon_lviv/widgets/components/members_component.dart';
@@ -78,18 +79,48 @@ class _ContentEventPageState extends State<_ContentEventPage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          context.read<EventBloc>().add(const EventEvent.toggleParticipate());
-        },
-        label: BlocBuilder<EventBloc, EventState>(builder: (context, state) {
-          final participate = state.maybeMap(
-            orElse: () => false,
-            data: (data) => data.participate,
-          );
-          return Text(participate ? 'Cancel' : 'Join');
-        }),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => context.read<SocialShareBloc>().add(
+                      ShareEventOnInstagramButtonPressed(
+                        event: widget.event,
+                      ),
+                    ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    Icon(Icons.ios_share),
+                    Text('Share'),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 12.0),
+            Expanded(
+              child: FloatingActionButton(
+                onPressed: () {
+                  context
+                      .read<EventBloc>()
+                      .add(const EventEvent.toggleParticipate());
+                },
+                child: BlocBuilder<EventBloc, EventState>(
+                    builder: (context, state) {
+                  final participate = state.maybeMap(
+                    orElse: () => false,
+                    data: (data) => data.participate,
+                  );
+                  return Text(participate ? 'Cancel' : 'Join');
+                }),
+              ),
+            ),
+          ],
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

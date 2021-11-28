@@ -14,31 +14,59 @@ class PickLocationPage extends StatefulWidget {
 class _PickLocationPageState extends State<PickLocationPage> {
   final CameraPosition _kLviv = const CameraPosition(
     target: LatLng(49.842957, 24.031111),
-    zoom: 10.0,
+    zoom: 12.0,
   );
   final BehaviorSubject<LatLng> _eventLocation =
       BehaviorSubject.seeded(const LatLng(49.842957, 24.031111));
+  final BehaviorSubject<Marker> _marker = BehaviorSubject.seeded(
+    const Marker(
+      markerId: MarkerId(''),
+      position: LatLng(49.842957, 24.031111),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            context
-                .read<CreateEventBloc>()
-                .add(LocationSubmitted(location: _eventLocation.value));
-            Navigator.pop(context);
-          },
-          child: const Icon(Icons.arrow_back_ios_new),
-        ),
-        title: const Text('Choose event location'),
-      ),
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kLviv,
-        onTap: (latLng) => _eventLocation.add(latLng),
+      body: Stack(
+        children: [
+          StreamBuilder<Marker>(
+              stream: _marker,
+              builder: (context, snapshot) {
+                return GoogleMap(
+                  mapType: MapType.normal,
+                  markers: {snapshot.data!},
+                  initialCameraPosition: _kLviv,
+                  onTap: (latLng) {
+                    _eventLocation.add(latLng);
+                    _marker.add(
+                      Marker(
+                        markerId: MarkerId(
+                          latLng.toString(),
+                        ),
+                        position: latLng,
+                      ),
+                    );
+                  },
+                );
+              }),
+          Positioned(
+            left: 16.0,
+            right: 16.0,
+            bottom: 48.0,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: 48.0,
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context, _eventLocation.value);
+                },
+                child: const Text('Select location'),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

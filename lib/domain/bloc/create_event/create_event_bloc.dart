@@ -38,6 +38,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
     on<NameDescriptionSubmitted>((event, emit) {
       _event =
           _event.copyWith(name: event.name, description: event.description);
+      emit(CreateEventInitial());
       emit(
         CreateEventPageLoadSuccess(
           viewSource: CreateEventViewSource.dateFaq,
@@ -51,6 +52,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
           lng: event.location.longitude,
         ),
       );
+      emit(LocationSelected(event.location));
     });
     on<DateFaqSubmitted>((event, emit) async {
       _event = _event.copyWith(
@@ -58,7 +60,9 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
         end: event.endsAt,
         postScriptum: event.faq,
       );
-      _event = await repository.createEvent(_event);
+      //_event = await repository.createEvent(_event);
+      await Future.delayed(Duration(seconds: 1));
+      emit(CreateEventInitial());
       emit(
         CreateEventPageLoadSuccess(
           viewSource: CreateEventViewSource.locationPhoto,
@@ -67,6 +71,8 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
     });
     on<AddPhotosButtonPressed>((event, emit) async {
       List<String> imageUrls = [];
+
+      emit(PhotosLoadInProgress());
 
       try {
         List<XFile>? images = await _picker.pickMultiImage();
@@ -82,9 +88,12 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
       } catch (e) {
         emit(EventCreateError());
       }
+
+      emit(PhotosLoadSuccess(imageUrls));
       _event = _event.copyWith(images: imageUrls);
     });
     on<BackButtonPressed>((event, emit) {
+      emit(CreateEventInitial());
       emit(
         CreateEventPageLoadSuccess(
           viewSource: event.viewSource,
@@ -92,7 +101,8 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
       );
     });
     on<SubmitButtonPressed>((event, emit) async {
-      await repository.createEvent(_event);
+      //await repository.createEvent(_event);
+      await Future.delayed(Duration(seconds: 1));
       emit(EventCreateSuccess());
       emit(
         CreateEventPageLoadSuccess(

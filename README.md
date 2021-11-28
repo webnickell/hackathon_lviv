@@ -1,11 +1,5 @@
-# hackathon_lviv
+# Amazing around
 
 
-[Ссылка на апк] (https://drive.google.com/drive/folders/1nfVnPOPQZgJGhvAo0Tgj6cq4CIjqK26w?usp=sharing)
-[Ссылка на репозиторий] (https://github.com/webnickell/hackathon_lviv)
-Приложение для создания привычек. 
-Вход происходит только через гугл, другое настроить не успели. 
-Оно синхронизиуется с вашими устройствами. То есть, если зайдете через другие девайсы под этим акком, то оно покажет те же самые данные. 
-Как пользоватся.
-На главном экране есть страница аккаунта, там отображается ваша аватарка и имя. + в дальнейшем там будет ваш прогресс в виде дизайнерского сада. Где полезные привычки будут цветками, а вредные сорняками
-На страинце меню можно увидеть список полезных и вредных привычек. Если список пустой, то там лоадер. Создать можно через большую синюю кнопку, и выбрать нужные опции. Затем, чтобы отметить, что вы соблюдаете привычку, то кликните на нее из списка привычек, и вы увидите календарь ручной работы. Где можно отметить дни, которые соблюдалась привычка. Синий, это то, что вы сейчас выбрали, зеленый то, что ранее. чтобы подтвердить нужно нажать сабмит. Затем вернитесь на список привычек и потяните вверх, список обновится и вы увидите обновленные счетчики.
+This app is to let people easily create, find and participate in interesting events, ideas and more effectively organize and popularize them.
+This is achieved by giving users opportunities to create events by themselves, and native ways to find interesting ones. Also, there are some other features for social activity and communication.
