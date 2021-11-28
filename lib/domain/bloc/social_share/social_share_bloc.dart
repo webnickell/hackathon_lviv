@@ -22,6 +22,7 @@ class SocialShareBloc extends Bloc<SocialShareEvent, SocialShareState> {
       final Uint8List imageBytes =
           await _screenshotController.captureFromWidget(
         EventCard(
+          onTap: () {},
           event: ShortEvent(
             begin: event.event.begin,
             name: event.event.name,
@@ -33,13 +34,13 @@ class SocialShareBloc extends Bloc<SocialShareEvent, SocialShareState> {
         ),
       );
 
-      File file = await File('${directory.path}/instashare.png').create();
+      File file = await File(imagePath).create();
       await file.writeAsBytes(imageBytes);
 
       await SocialShare.shareInstagramStory(
-        imagePath,
-        backgroundTopColor: "ffe3ec",
-        backgroundBottomColor: "ffe3ec",
+        file.path,
+        backgroundTopColor: "ffe4e1",
+        backgroundBottomColor: "ffe4e1",
       );
     });
   }

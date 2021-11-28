@@ -36,7 +36,7 @@ class _NameDescriptionPageState extends State<NameDescriptionPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              const ProgressBar(isSelected: [false, false, false]),
+              const ProgressBar(isSelected: [true, false, false]),
               const SizedBox(height: 20.0),
               const Text(
                 'Create interesting name for your event',

@@ -14,9 +14,9 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  final CameraPosition _kLviv = const CameraPosition(
+    target: LatLng(49.842957, 24.031111),
+    zoom: 12.0,
   );
 
   GoogleMapController? _controller;
@@ -26,8 +26,8 @@ class _MapPageState extends State<MapPage> {
     super.initState();
     context.read<MapBloc>().add(MapEvent.loadByCoords(
             coords: Coords(
-          lat: _kGooglePlex.target.latitude,
-          lng: _kGooglePlex.target.longitude,
+          lat: _kLviv.target.latitude,
+          lng: _kLviv.target.longitude,
         )));
   }
 
@@ -69,8 +69,8 @@ class _MapPageState extends State<MapPage> {
             );
             return GoogleMap(
               myLocationEnabled: true,
-              mapType: MapType.hybrid,
-              initialCameraPosition: _kGooglePlex,
+              mapType: MapType.normal,
+              initialCameraPosition: _kLviv,
               onMapCreated: (controller) => _controller = controller,
               markers: markers,
               circles: circles,

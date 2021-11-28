@@ -12,6 +12,7 @@ import 'package:hackathon_lviv/domain/bloc/event/event_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/habit_card/habit_card_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/map/map_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/progress/progress_bloc.dart';
+import 'package:hackathon_lviv/domain/bloc/social_share/social_share_bloc.dart';
 import 'package:hackathon_lviv/domain/repository/account_repository.dart';
 import 'package:hackathon_lviv/domain/repository/checked_days_repository.dart';
 import 'package:hackathon_lviv/domain/repository/event_repository.dart';
@@ -44,6 +45,9 @@ class AuthorizedApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: RootPage.routeName,
+        theme: ThemeData(
+          primaryColor: const Color(0xFF5865F2),
+        ),
         routes: {
           RootPage.routeName: (ctx) => MultiBlocProvider(
                 providers: [
@@ -62,12 +66,19 @@ class AuthorizedApp extends StatelessWidget {
                   userId: state.account.uid,
                 ),
               ),
-          EventPage.routeName: (ctx) => BlocProvider<EventBloc>(
-                create: (ctx) => EventBloc(
-                  accountRepository: ctx.read<AccountRepository>(),
-                  eventRepository: ctx.read<EventRepository>(),
-                  uid: state.authorizedId!,
-                ),
+          EventPage.routeName: (ctx) => MultiBlocProvider(
+                providers: [
+                  BlocProvider<EventBloc>(
+                    create: (ctx) => EventBloc(
+                      accountRepository: ctx.read<AccountRepository>(),
+                      eventRepository: ctx.read<EventRepository>(),
+                      uid: state.authorizedId!,
+                    ),
+                  ),
+                  BlocProvider<SocialShareBloc>(
+                    create: (_) => SocialShareBloc(),
+                  ),
+                ],
                 child: const EventPage(),
               ),
         },
