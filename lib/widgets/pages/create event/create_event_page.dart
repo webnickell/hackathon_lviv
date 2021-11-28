@@ -25,37 +25,33 @@ class _CreateEventPageState extends State<CreateEventPage> {
         listener: (context, state) {
           if (state is EventCreateSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Center(
-                  child: Text(
-                    'Event created',
-                    style: const TextStyle(color: Colors.white),
-                  ),
+              const SnackBar(
+                content: const Text(
+                  'Event created',
+                  style: const TextStyle(color: Colors.white),
                 ),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 duration: const Duration(seconds: 2),
                 behavior: SnackBarBehavior.floating,
                 elevation: 3,
                 margin: const EdgeInsets.all(12.0),
-                shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0)),
                 backgroundColor: Colors.green,
               ),
             );
           } else if (state is EventCreateError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Center(
-                  child: Text(
-                    'Error occured',
-                    style: const TextStyle(color: Colors.white),
-                  ),
+                content: const Text(
+                  'Error occured',
+                  style: const TextStyle(color: Colors.white),
                 ),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 behavior: SnackBarBehavior.floating,
                 duration: const Duration(seconds: 2),
                 elevation: 3,
                 margin: const EdgeInsets.all(12.0),
-                shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0)),
                 backgroundColor: Colors.red[400],
               ),
             );
