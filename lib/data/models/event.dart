@@ -36,12 +36,13 @@ class EventResponse {
       id: snapshot.id,
       name: data['name'] as String,
       description: data['description'] as String,
-      startDate: DateTime.parse(data['startDate']),
-      endDate: DateTime.parse(data['endDate']),
+      startDate: (data['startDate'] as Timestamp).toDate(),
+      endDate: (data['endDate'] as Timestamp).toDate(),
       authorId: data['authorId'] as String,
-      images: data['images'] as List<String>,
+      images:
+          (data['images'] as List<dynamic>).map((e) => e as String).toList(),
       location: data['location'] as GeoPoint,
-      postScriptum: data['location'] as String,
+      postScriptum: data['postScriptum'] as String,
     );
   }
 
@@ -53,7 +54,7 @@ class EventResponse {
         images: habit.images,
         authorId: habit.authorId,
         startDate: habit.begin,
-        endDate: DateTime.now(),
+        endDate: habit.end,
         postScriptum: habit.postScriptum,
       );
 

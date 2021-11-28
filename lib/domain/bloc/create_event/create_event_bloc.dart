@@ -101,8 +101,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
       );
     });
     on<SubmitButtonPressed>((event, emit) async {
-      //await repository.createEvent(_event);
-      await Future.delayed(Duration(seconds: 1));
+      await repository.createEvent(_event);
       emit(EventCreateSuccess());
       emit(
         CreateEventPageLoadSuccess(
