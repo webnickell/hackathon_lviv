@@ -33,6 +33,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                   ),
                 ),
                 duration: const Duration(seconds: 2),
+                behavior: SnackBarBehavior.floating,
                 elevation: 3,
                 margin: const EdgeInsets.all(12.0),
                 shape: OutlineInputBorder(
@@ -49,6 +50,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
+                behavior: SnackBarBehavior.floating,
                 duration: const Duration(seconds: 2),
                 elevation: 3,
                 margin: const EdgeInsets.all(12.0),

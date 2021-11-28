@@ -40,23 +40,12 @@ class _AccountPageState extends State<AccountPage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: BlocBuilder<ProgressBloc, ProgressState>(
-                  builder: (context, state) => state.maybeMap(
-                      orElse: () =>
-                          const Center(child: CircularProgressIndicator()),
-                      data: (data) => Column(
-                            children: data.data
-                                .map((e) => WeekLine(week: e))
-                                .toList(),
-                          )
-                      // ListView.builder(
-                      //   itemCount: data.data.length,
-                      //   itemBuilder: (ctx, i) => WeekLine(week: data.data[i]),
-                      // ),
-                      ),
-                ),
+              child: Column(
+                children: [
+                  Text('Your quests'),
+                  SizedBox(height: 8.0),
+                  
+                ],
               ),
             ),
             const SliverToBoxAdapter(
