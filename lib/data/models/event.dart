@@ -86,7 +86,7 @@ class EventResponse {
         name: name,
         coords: Coords(lat: location.latitude, lng: location.longitude),
         begin: startDate,
-        previewUrl: images.first,
+        previewUrl: images.isNotEmpty ? images.first : '',
         members: members,
       );
 }

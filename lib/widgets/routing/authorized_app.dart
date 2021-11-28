@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hackathon_lviv/data/firestore_repository/checked_days_firestore_repository.dart';
 import 'package:hackathon_lviv/data/firestore_repository/event_firestore_repository.dart';
 import 'package:hackathon_lviv/data/firestore_repository/habit_firestore_repository.dart';
+import 'package:hackathon_lviv/data/firestore_repository/members_firestore_repository.dart';
 import 'package:hackathon_lviv/domain/bloc/account/account_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/add_habit/add_habit_bloc.dart';
 import 'package:hackathon_lviv/domain/bloc/create_event/create_event_bloc.dart';
@@ -17,6 +18,7 @@ import 'package:hackathon_lviv/domain/repository/account_repository.dart';
 import 'package:hackathon_lviv/domain/repository/checked_days_repository.dart';
 import 'package:hackathon_lviv/domain/repository/event_repository.dart';
 import 'package:hackathon_lviv/domain/repository/habit_repository.dart';
+import 'package:hackathon_lviv/domain/repository/members_repository.dart';
 import 'package:hackathon_lviv/domain/repository/week_repository.dart';
 import 'package:hackathon_lviv/widgets/pages/add_habit_page.dart';
 import 'package:hackathon_lviv/widgets/pages/create%20event/create_event_page.dart';
@@ -37,6 +39,13 @@ class AuthorizedApp extends StatelessWidget {
         Provider<EventRepository>(
           create: (ctx) {
             return EventFirestoreRepository(
+              firestore: FirebaseFirestore.instance,
+            );
+          },
+        ),
+        Provider<MembersRepository>(
+          create: (ctx) {
+            return MembersFirestoreRepository(
               firestore: FirebaseFirestore.instance,
             );
           },
@@ -86,7 +95,8 @@ class AuthorizedApp extends StatelessWidget {
                     create: (ctx) => EventBloc(
                       accountRepository: ctx.read<AccountRepository>(),
                       eventRepository: ctx.read<EventRepository>(),
-                      uid: state.authorizedId!,
+                      membersRepository: ctx.read<MembersRepository>(),
+                      userAccount: state.account,
                     ),
                   ),
                   BlocProvider<SocialShareBloc>(

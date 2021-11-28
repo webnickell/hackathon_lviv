@@ -39,10 +39,15 @@ class _EventCardState extends State<EventCard> {
                 children: [
                   AspectRatio(
                     aspectRatio: 1,
-                    child: Image.network(
-                      widget.event.previewUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.event.previewUrl.isNotEmpty
+                        ? Image.network(
+                            widget.event.previewUrl,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/default_trip.png',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
