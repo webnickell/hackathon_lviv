@@ -60,8 +60,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
         end: event.endsAt,
         postScriptum: event.faq,
       );
-      //_event = await repository.createEvent(_event);
-      await Future.delayed(Duration(seconds: 1));
+      _event = await repository.createEvent(_event);
       emit(CreateEventInitial());
       emit(
         CreateEventPageLoadSuccess(
