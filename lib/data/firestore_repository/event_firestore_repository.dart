@@ -18,7 +18,6 @@ class EventFirestoreRepository extends EventRepository {
 
   @override
   Future<Event> createEvent(Event event) async {
-    events;
     final req = EventResponse.fromModel(event);
     final ref = await events.add(req);
     final res = await ref.get();
@@ -39,41 +38,17 @@ class EventFirestoreRepository extends EventRepository {
     Object? cursor,
     int limit = 15,
   }) async {
-    final list = List.generate(
-      10,
-      (index) => ShortEvent(
-        id: '$index',
-        coords: Coords(lat: coords.lat + 0.00005, lng: coords.lng),
-        begin: DateTime.now(),
-        previewUrl:
-            'https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300',
-        name: 'Event $index',
-        members: index % 5,
-      ),
-    );
-    return PaginatedList(data: list, cursor: null, loadedAllItems: true);
+    final start = cursor == null
+        ? events
+        : events.startAfterDocument(cursor as DocumentSnapshot);
+    final query = await start.limit(limit).get();
+    final res = query.docs.map((e) => e.data().toShortModel()).toList();
+    return PaginatedList(
+        data: res, cursor: query.docs.last, loadedAllItems: true);
   }
 
   @override
   Future<Event?> eventById(String id) async {
-    return Event(
-      id: id,
-      begin: DateTime.now(),
-      end: DateTime.now(),
-      postScriptum: '',
-      name: 'Name',
-      description: 'Description',
-      coords: Coords(
-        lat: 49.50,
-        lng: 24.00,
-      ),
-      authorId: '',
-      images: [
-        'https://deih43ym53wif.cloudfront.net/lviv-ukraine-shutterstock_231990358-2_996b60addc.jpeg',
-        'https://cdn.getyourguide.com/img/location/595263265eaa0.jpeg/92.jpg',
-        'https://kidpassage.com/images/publications/images/lvov-aprele-otdyh-pogoda-photo2(1).jpg'
-      ],
-    );
     final res = await events.doc(id).get();
     return res.data()?.toModel();
   }
